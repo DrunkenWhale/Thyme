@@ -6,8 +6,9 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.server.{PathMatcher, Route}
-import spray.json.{DefaultJsonProtocol, RootJsonFormat, enrichAny}
+import spray.json.{DefaultJsonProtocol, JsValue, RootJsonFormat, enrichAny}
 import spray.json.DefaultJsonProtocol._
+import thyme.Thyme.parseRoutePath
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.ExecutionContextExecutor
@@ -24,14 +25,61 @@ class Thyme {
         }
     }
 
-    def POST(postPath: String): Thyme = {
+    def POST(f:Map[String,String]=>JsValue,postPath: String): Thyme = {
         route = concat(route,
             post {
-                path(postPath.split('/').map(x=>PathMatcher(x)).reduce((x,y)=>x/y)) {
+                path(parseRoutePath(postPath)) {
                     formFieldMap {
-                        form =>
-                            implicit val impl: RootJsonFormat[test] = jsonFormat2(test)
-                            complete(test("秀吉", 114514).toJson.prettyPrint)
+                        form => complete(HttpEntity(ContentTypes.`application/json`,f(form).toString()))
+                    }
+                }
+            }
+        )
+        this
+    }
+
+    def GET(f:Map[String,String]=>JsValue,getPath: String): Thyme = {
+        route = concat(route,
+            get {
+                path(parseRoutePath(getPath)) {
+                    formFieldMap {
+                        form => complete(HttpEntity(ContentTypes.`application/json`,f(form).toString()))
+                    }
+                }
+            }
+        )
+        this
+    }
+    def PUT(f:Map[String,String]=>JsValue,putPath: String): Thyme = {
+        route = concat(route,
+            put {
+                path(parseRoutePath(putPath)) {
+                    formFieldMap {
+                        form => complete(HttpEntity(ContentTypes.`application/json`,f(form).toString()))
+                    }
+                }
+            }
+        )
+        this
+    }
+    def DELETE(f:Map[String,String]=>JsValue,deletePath: String): Thyme = {
+        route = concat(route,
+            delete {
+                path(parseRoutePath(deletePath)) {
+                    formFieldMap {
+                        form => complete(HttpEntity(ContentTypes.`application/json`,f(form).toString()))
+                    }
+                }
+            }
+        )
+        this
+    }
+    def OPTIONS(f:Map[String,String]=>JsValue,optionsPath: String): Thyme = {
+        route = concat(route,
+            options {
+                path(parseRoutePath(optionsPath)) {
+                    formFieldMap {
+                        form => complete(HttpEntity(ContentTypes.`application/json`,f(form).toString()))
                     }
                 }
             }
@@ -52,7 +100,12 @@ class Thyme {
 }
 
 object Thyme {
+
     def apply(): Thyme = {
         new Thyme()
+    }
+
+    private def parseRoutePath(routePath:String): PathMatcher[Unit] ={
+        routePath.split('/').map(x=>PathMatcher(x)).reduce((x,y)=>x/y)
     }
 }
