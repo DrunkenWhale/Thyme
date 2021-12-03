@@ -1,6 +1,6 @@
 name := "Thyme"
 
-version := "0.1"
+version := "0.0.2"
 
 scalaVersion := "2.13.7"
 
@@ -13,5 +13,6 @@ libraryDependencies ++= Seq(
     "com.typesafe.akka" %% "akka-http" % AkkaHttpVersion,
     "com.typesafe.akka" %% "akka-slf4j" % AkkaVersion,
     "com.typesafe.akka" %% "akka-http-spray-json" % AkkaHttpVersion,
+    //    "org.squeryl" %% "squeryl" % "0.9.16",
     "ch.qos.logback" % "logback-classic" % "1.2.7"
 )

@@ -2,7 +2,7 @@ package thyme
 
 import akka.http.scaladsl.model.{HttpHeader, HttpMethod, Uri}
 
-sealed class ThymeContext(
+class ThymeContext(
                              val header: Map[String, String],
                              val param  : Map[String, String],
                              val body   : Map[String, String],
