@@ -1,18 +1,16 @@
-import spray.json.DefaultJsonProtocol.{StringJsonFormat, jsonFormat3}
+import spray.json.DefaultJsonProtocol.{StringJsonFormat, jsonFormat3, mapFormat}
 import spray.json.{JsValue, RootJsonFormat, enrichAny}
-import thyme.Thyme
+import thyme.{Thyme, ThymeContext}
 
 object Test {
     def main(args: Array[String]): Unit = {
         Thyme()
-            .POST(test,"test")
+            .POST(test,"test/test")
             .GET(test,"test")
             .run()
     }
 
-    val test: Map[String, String] => JsValue = (x:Map[String,String]) => {
-        case class temp(name: String, age: String, grade: String)
-        implicit val tempFormat: RootJsonFormat[temp] = jsonFormat3(temp)
-        temp(x("name"),x("age"),x("grade")).toJson
+    val test: ThymeContext => JsValue = x => {
+        x.body.toJson
     }
 }
