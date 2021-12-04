@@ -16,3 +16,5 @@ libraryDependencies ++= Seq(
     //    "org.squeryl" %% "squeryl" % "0.9.16",
     "ch.qos.logback" % "logback-classic" % "1.2.7"
 )
+
+

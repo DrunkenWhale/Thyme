@@ -1,0 +1,13 @@
+[debug] Packaging D:\ScalaProject\Thyme\target\scala-2.13\thyme_2.13-0.0.2-sources.jar ...
+[debug] Input file mappings:
+[debug] 	Test.scala
+[debug] 	  D:\ScalaProject\Thyme\src\main\scala\Test.scala
+[debug] 	thyme\Thyme.scala
+[debug] 	  D:\ScalaProject\Thyme\src\main\scala\thyme\Thyme.scala
+[debug] 	thyme\ThymeContext.scala
+[debug] 	  D:\ScalaProject\Thyme\src\main\scala\thyme\ThymeContext.scala
+[debug] 	thyme\ThymeInterceptor.scala
+[debug] 	  D:\ScalaProject\Thyme\src\main\scala\thyme\ThymeInterceptor.scala
+[debug] 	thyme\ThymeResponse.scala
+[debug] 	  D:\ScalaProject\Thyme\src\main\scala\thyme\ThymeResponse.scala
+[debug] Done packaging.

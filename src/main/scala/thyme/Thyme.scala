@@ -1,6 +1,6 @@
 package thyme
 
-import akka.actor.typed.ActorSystem
+import akka.actor.typed.{ActorSystem, BehaviorInterceptor}
 import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Directives._
@@ -71,37 +71,6 @@ class Thyme(private val name: String) {
         this
     }
 
-
-//    private def listen(f: ThymeContext => JsValue, pathString: String): Route = {
-//        path(parseRoutePath(pathString)) {
-//            (extractRequest & formFieldMap & parameterMap) {
-//                (request, form, param) =>
-//
-//                    // Change Http data to `ThymeContext`
-//                    // user can get all(maybe) data from `ThymeContext`
-//                    // and mount their response on `ThymeResponse`
-//
-//
-//                    val thymeContext = ThymeContext(
-//                        request.headers,
-//                        param = param,
-//                        body = form,
-//                        url = request.uri,
-//                        method = request.method,
-//                        protocol = request.protocol.value,
-//                    )
-//
-//                    respondWithHeaders(request.headers) {
-//                        complete(HttpEntity(
-//                            ContentTypes.`application/json`,
-//                            ThymeResponse(f(thymeContext)).toString
-//                        ))
-//                    }
-//
-//            }
-//        }
-//    }
-
     private def listen(f: ThymeContext => ThymeResponse, pathString: String): Route = {
         path(parseRoutePath(pathString)) {
             (extractRequest & formFieldMap & parameterMap) {
@@ -120,13 +89,13 @@ class Thyme(private val name: String) {
                         protocol = request.protocol.value,
                     )
 
+
+
                     val response = f(thymeContext)
 
-
-
-                    respondWithHeaders(response.header.appendedAll
-                    (if (response.cors) defaultResponseHeaders
-                    else defaultResponseHeaders)) {
+                    respondWithHeaders(response.header.appendedAll(
+                        if (response.cors) defaultResponseHeaders
+                        else               Seq[RawHeader]())) {
                         complete(HttpEntity(
                             ContentTypes.`application/json`,
                             response.toString
@@ -136,7 +105,6 @@ class Thyme(private val name: String) {
             }
         }
     }
-
 
     def run(port: Int = 2333, host: String = "localhost"): Unit = {
         implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, name)

@@ -1,0 +1,55 @@
+[info] :: delivering :: default#thyme_2.13;0.0.2 :: 0.0.2 :: release :: Sat Dec 04 17:18:30 CST 2021
+[debug] 	options = status=release pubdate=Sat Dec 04 17:18:30 CST 2021 validate=true resolveDynamicRevisions=true merge=true resolveId=null pubBranch=null
+[info] 	delivering ivy file to D:\ScalaProject\Thyme\target\scala-2.13\ivy-0.0.2.xml
+[debug] 	deliver done (10ms)
+[debug] local do not support transaction. ivy pattern does not use revision as a directory
+[debug] C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\poms\thyme_2.13.pom already exists, nothing done
+[warn] Attempting to overwrite C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\poms\thyme_2.13.pom (non-SNAPSHOT)
+[warn] 	You need to remove it from the cache manually to take effect.
+[debug] C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\poms\thyme_2.13.pom.sha1 already exists, nothing done
+[warn] Attempting to overwrite C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\poms\thyme_2.13.pom.sha1 (non-SNAPSHOT)
+[warn] 	You need to remove it from the cache manually to take effect.
+[debug] C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\poms\thyme_2.13.pom.md5 already exists, nothing done
+[warn] Attempting to overwrite C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\poms\thyme_2.13.pom.md5 (non-SNAPSHOT)
+[warn] 	You need to remove it from the cache manually to take effect.
+[info] 	published thyme_2.13 to C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\poms\thyme_2.13.pom
+[debug] C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\jars\thyme_2.13.jar already exists, nothing done
+[warn] Attempting to overwrite C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\jars\thyme_2.13.jar (non-SNAPSHOT)
+[warn] 	You need to remove it from the cache manually to take effect.
+[debug] C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\jars\thyme_2.13.jar.sha1 already exists, nothing done
+[warn] Attempting to overwrite C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\jars\thyme_2.13.jar.sha1 (non-SNAPSHOT)
+[warn] 	You need to remove it from the cache manually to take effect.
+[debug] C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\jars\thyme_2.13.jar.md5 already exists, nothing done
+[warn] Attempting to overwrite C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\jars\thyme_2.13.jar.md5 (non-SNAPSHOT)
+[warn] 	You need to remove it from the cache manually to take effect.
+[info] 	published thyme_2.13 to C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\jars\thyme_2.13.jar
+[debug] C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\srcs\thyme_2.13-sources.jar already exists, nothing done
+[warn] Attempting to overwrite C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\srcs\thyme_2.13-sources.jar (non-SNAPSHOT)
+[warn] 	You need to remove it from the cache manually to take effect.
+[debug] C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\srcs\thyme_2.13-sources.jar.sha1 already exists, nothing done
+[warn] Attempting to overwrite C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\srcs\thyme_2.13-sources.jar.sha1 (non-SNAPSHOT)
+[warn] 	You need to remove it from the cache manually to take effect.
+[debug] C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\srcs\thyme_2.13-sources.jar.md5 already exists, nothing done
+[warn] Attempting to overwrite C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\srcs\thyme_2.13-sources.jar.md5 (non-SNAPSHOT)
+[warn] 	You need to remove it from the cache manually to take effect.
+[info] 	published thyme_2.13 to C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\srcs\thyme_2.13-sources.jar
+[debug] C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\docs\thyme_2.13-javadoc.jar already exists, nothing done
+[warn] Attempting to overwrite C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\docs\thyme_2.13-javadoc.jar (non-SNAPSHOT)
+[warn] 	You need to remove it from the cache manually to take effect.
+[debug] C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\docs\thyme_2.13-javadoc.jar.sha1 already exists, nothing done
+[warn] Attempting to overwrite C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\docs\thyme_2.13-javadoc.jar.sha1 (non-SNAPSHOT)
+[warn] 	You need to remove it from the cache manually to take effect.
+[debug] C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\docs\thyme_2.13-javadoc.jar.md5 already exists, nothing done
+[warn] Attempting to overwrite C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\docs\thyme_2.13-javadoc.jar.md5 (non-SNAPSHOT)
+[warn] 	You need to remove it from the cache manually to take effect.
+[info] 	published thyme_2.13 to C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\docs\thyme_2.13-javadoc.jar
+[debug] C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\ivys\ivy.xml already exists, nothing done
+[warn] Attempting to overwrite C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\ivys\ivy.xml (non-SNAPSHOT)
+[warn] 	You need to remove it from the cache manually to take effect.
+[debug] C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\ivys\ivy.xml.sha1 already exists, nothing done
+[warn] Attempting to overwrite C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\ivys\ivy.xml.sha1 (non-SNAPSHOT)
+[warn] 	You need to remove it from the cache manually to take effect.
+[debug] C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\ivys\ivy.xml.md5 already exists, nothing done
+[warn] Attempting to overwrite C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\ivys\ivy.xml.md5 (non-SNAPSHOT)
+[warn] 	You need to remove it from the cache manually to take effect.
+[info] 	published ivy to C:\Users\user\.ivy2\local\default\thyme_2.13\0.0.2\ivys\ivy.xml
