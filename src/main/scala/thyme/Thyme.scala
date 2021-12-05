@@ -26,9 +26,9 @@ class Thyme(private val name: String) {
         }
     }
 
-    private var interceptors : Seq[ThymeInterceptor] = Seq()
+    private var interceptors: Seq[ThymeInterceptor] = Seq()
 
-    def POST(f: ThymeContext => ThymeResponse, postPath: String): Thyme = {
+    def POST(postPath: String, f: ThymeContext => ThymeResponse): Thyme = {
         route = concat(route,
             post {
                 listen(f, postPath)
@@ -37,7 +37,7 @@ class Thyme(private val name: String) {
         this
     }
 
-    def GET(f: ThymeContext => ThymeResponse, getPath: String): Thyme = {
+    def GET(getPath: String, f: ThymeContext => ThymeResponse): Thyme = {
         route = concat(route,
             get {
                 listen(f, getPath)
@@ -46,7 +46,7 @@ class Thyme(private val name: String) {
         this
     }
 
-    def PUT(f: ThymeContext => ThymeResponse, putPath: String): Thyme = {
+    def PUT(putPath: String, f: ThymeContext => ThymeResponse): Thyme = {
         route = concat(route,
             put {
                 listen(f, putPath)
@@ -55,7 +55,7 @@ class Thyme(private val name: String) {
         this
     }
 
-    def DELETE(f: ThymeContext => ThymeResponse, deletePath: String): Thyme = {
+    def DELETE(deletePath: String, f: ThymeContext => ThymeResponse): Thyme = {
         route = concat(route,
             delete {
                 listen(f, deletePath)
@@ -64,7 +64,7 @@ class Thyme(private val name: String) {
         this
     }
 
-    def OPTIONS(f: ThymeContext => ThymeResponse, optionsPath: String): Thyme = {
+    def OPTIONS(optionsPath: String, f: ThymeContext => ThymeResponse): Thyme = {
         route = concat(route,
             options {
                 listen(f, optionsPath)
@@ -97,8 +97,8 @@ class Thyme(private val name: String) {
                     )
 
                     // request be intercept
-                    if(!interceptors.forall(x => ThymeInterceptor.work(thymeContext, x))){
-                        return complete(HttpEntity(ContentTypes.`application/json`,""))
+                    if (!interceptors.forall(x => ThymeInterceptor.work(thymeContext, x))) {
+                        return complete(HttpEntity(ContentTypes.`application/json`, ""))
                     }
 
                     val response = f(thymeContext)
@@ -108,7 +108,7 @@ class Thyme(private val name: String) {
                         else Seq[RawHeader]())) {
                         complete(HttpEntity(
                             ContentTypes.`application/json`,
-                            response.toString
+                            response.body.toString
                         ))
                     }
 
@@ -141,7 +141,7 @@ object Thyme {
         RawHeader("Access-Control-Allow-Credentials", "true")
     )
 
-    private def parseRoutePath(routePath: String): PathMatcher[Unit] = {
+    private def parseRoutePath(routePath: String) = {
         routePath.split('/').map(x => PathMatcher(x)).reduce((x, y) => x / y)
     }
 }
