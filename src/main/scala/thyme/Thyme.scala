@@ -26,6 +26,8 @@ class Thyme(private val name: String) {
         }
     }
 
+    private var interceptors : Seq[ThymeInterceptor] = Seq()
+
     def POST(f: ThymeContext => ThymeResponse, postPath: String): Thyme = {
         route = concat(route,
             post {
@@ -71,6 +73,11 @@ class Thyme(private val name: String) {
         this
     }
 
+    def addInterceptor(excludePath: Seq[String] = List(), interceptor: ThymeContext => Boolean): Thyme = {
+        this.interceptors = this.interceptors.appended(ThymeInterceptor(excludePath = excludePath, interceptor = interceptor))
+        this
+    }
+
     private def listen(f: ThymeContext => ThymeResponse, pathString: String): Route = {
         path(parseRoutePath(pathString)) {
             (extractRequest & formFieldMap & parameterMap) {
@@ -89,13 +96,16 @@ class Thyme(private val name: String) {
                         protocol = request.protocol.value,
                     )
 
-
+                    // request be intercept
+                    if(!interceptors.forall(x => ThymeInterceptor.work(thymeContext, x))){
+                        return complete(HttpEntity(ContentTypes.`application/json`,""))
+                    }
 
                     val response = f(thymeContext)
 
                     respondWithHeaders(response.header.appendedAll(
                         if (response.cors) defaultResponseHeaders
-                        else               Seq[RawHeader]())) {
+                        else Seq[RawHeader]())) {
                         complete(HttpEntity(
                             ContentTypes.`application/json`,
                             response.toString

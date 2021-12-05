@@ -10,6 +10,7 @@ class ThymeContext(
                              val url    : Uri,
                              val protocol: String
                          ) {
+    var attribute:Map[String,String] = Map()
 }
 
 object ThymeContext {
