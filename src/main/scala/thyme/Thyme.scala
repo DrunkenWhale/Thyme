@@ -79,7 +79,7 @@ class Thyme(private val name: String) {
     }
 
     private def listen(f: ThymeContext => ThymeResponse, pathString: String): Route = {
-        path(parseRoutePath(pathString)) {
+        path(parseRoutePath(pathString).getOrElse("/" / pathString)) {
             (extractRequest & formFieldMap & parameterMap) {
                 (request, form, param) =>
 
@@ -142,6 +142,6 @@ object Thyme {
     )
 
     private def parseRoutePath(routePath: String) = {
-        routePath.split('/').map(x => PathMatcher(x)).reduce((x, y) => x / y)
+        routePath.split('/').map(x => PathMatcher(x)).reduceOption((x, y) => x / y)
     }
 }
