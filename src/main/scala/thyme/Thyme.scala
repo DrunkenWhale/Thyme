@@ -129,6 +129,26 @@ class Thyme(private val name: String) {
         implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, name)
         implicit val executionContext: ExecutionContextExecutor = system.executionContext
         val bindingFuture = Http().newServerAt(host, port).bind(route)
+        println(
+            """
+              |
+              |**************************************************************************
+              |*                                        ******                          *
+              |*                                          ******                        *
+              |*                                            ******                      *
+              |*                   ***************            ******                    *
+              |*                                               *******                  *
+              |*                   ***************            ******                    *
+              |*                                            ******                      *
+              |*                                          ******                        *
+              |*                                        ******                          *
+              |*                                                                        *
+              |*                                                                        *
+              |*                                                                        *
+              |*                                                                        *
+              |**************************************************************************
+              |
+              |""".stripMargin)
         StdIn.readLine()
         bindingFuture
             .flatMap(_.unbind())
