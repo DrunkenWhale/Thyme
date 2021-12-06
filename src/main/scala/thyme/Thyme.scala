@@ -6,7 +6,7 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.model.headers.RawHeader
-import akka.http.scaladsl.server.{PathMatcher, Route}
+import akka.http.scaladsl.server.{PathMatcher, PathMatcher0, Route}
 import spray.json.JsValue
 import thyme.Thyme.{defaultResponseHeaders, parseRoutePath}
 
@@ -78,10 +78,16 @@ class Thyme(private val name: String) {
         this
     }
 
+    def addLogger(logger:ThymeContext => Unit): Thyme ={
+        ThymeLogger.modifyLogger(logger)
+        this
+    }
+
     private def listen(f: ThymeContext => ThymeResponse, pathString: String): Route = {
-        path(parseRoutePath(pathString).getOrElse("/" / pathString)) {
+        path(parseRoutePath(pathString)) {
             (extractRequest & formFieldMap & parameterMap) {
                 (request, form, param) =>
+
 
                     // Change Http data to `ThymeContext`
                     // user can get all(maybe) data from `ThymeContext`
@@ -101,6 +107,8 @@ class Thyme(private val name: String) {
                         return complete(HttpEntity(ContentTypes.`application/json`, ""))
                     }
 
+                    ThymeLogger.work(context = thymeContext)
+
                     val response = f(thymeContext)
 
                     respondWithHeaders(response.header.appendedAll(
@@ -117,6 +125,7 @@ class Thyme(private val name: String) {
     }
 
     def run(port: Int = 2333, host: String = "localhost"): Unit = {
+
         implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, name)
         implicit val executionContext: ExecutionContextExecutor = system.executionContext
         val bindingFuture = Http().newServerAt(host, port).bind(route)
@@ -141,7 +150,7 @@ object Thyme {
         RawHeader("Access-Control-Allow-Credentials", "true")
     )
 
-    private def parseRoutePath(routePath: String) = {
-        routePath.split('/').map(x => PathMatcher(x)).reduceOption((x, y) => x / y)
+    private def parseRoutePath(routePath: String): PathMatcher0 = {
+        separateOnSlashes(routePath)
     }
 }
