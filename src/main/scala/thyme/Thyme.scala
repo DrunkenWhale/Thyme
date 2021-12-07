@@ -78,7 +78,7 @@ class Thyme(private val name: String) {
         this
     }
 
-    def addLogger(logger:ThymeContext => Unit): Thyme ={
+    def addLogger(logger:(ThymeContext,Int) => Unit): Thyme ={
         ThymeLogger.modifyLogger(logger)
         this
     }
@@ -107,17 +107,22 @@ class Thyme(private val name: String) {
                         return complete(HttpEntity(ContentTypes.`application/json`, ""))
                     }
 
-                    ThymeLogger.work(context = thymeContext)
-
-                    val response = f(thymeContext)
-
-                    respondWithHeaders(response.header.appendedAll(
-                        if (response.cors) defaultResponseHeaders
-                        else Seq[RawHeader]())) {
-                        complete(HttpEntity(
-                            ContentTypes.`application/json`,
-                            response.body.toString
-                        ))
+                    try{
+                        val response = f(thymeContext)
+                        ThymeLogger.work(context = thymeContext, 200)
+                        respondWithHeaders(response.header.appendedAll(
+                            if (response.cors) defaultResponseHeaders
+                            else Seq[RawHeader]())) {
+                            complete(HttpEntity(
+                                ContentTypes.`application/json`,
+                                response.body.toString
+                            ))
+                        }
+                    } catch {
+                        case e:Exception =>
+                            ThymeLogger.work(context = thymeContext, 500)
+                            e.printStackTrace()
+                            complete(StatusCodes.ServerError(500)(e.getMessage,"Interval Error"))
                     }
 
             }
@@ -133,6 +138,9 @@ class Thyme(private val name: String) {
             """
               |
               |**************************************************************************
+              |*                                                                        *
+              |*                                                                        *
+              |*                                                                        *
               |*                                        ******                          *
               |*                                          ******                        *
               |*                                            ******                      *
@@ -149,6 +157,8 @@ class Thyme(private val name: String) {
               |**************************************************************************
               |
               |""".stripMargin)
+
+
         StdIn.readLine()
         bindingFuture
             .flatMap(_.unbind())
@@ -171,6 +181,10 @@ object Thyme {
     )
 
     private def parseRoutePath(routePath: String): PathMatcher0 = {
-        separateOnSlashes(routePath)
+        routePath(0) match {
+            case '/' => separateOnSlashes(routePath.substring(1))
+            case _ =>  separateOnSlashes(routePath)
+        }
+
     }
 }

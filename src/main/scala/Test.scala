@@ -7,6 +7,7 @@ object Test {
         Thyme()
             .POST("test/test",test)
             .GET ("test",test)
+            .GET("hello",x=>ThymeResponse("Hello World!".toJson))
             .run()
     }
 
