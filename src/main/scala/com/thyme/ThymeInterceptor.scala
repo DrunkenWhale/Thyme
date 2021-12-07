@@ -14,6 +14,8 @@ class ThymeInterceptor(val excludePath: Seq[String],
      * @return false => refuse this request
      * singleton interceptor
      * multiply interceptor are hard realization
+     * all right, i finish a beta interceptor class and it support multiply interceptor
+     * hhh
      * */
 
 }

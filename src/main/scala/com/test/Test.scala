@@ -1,5 +1,6 @@
-package com.thyme
+package com.test
 
+import com.thyme.{Thyme, ThymeContext, ThymeResponse}
 import spray.json.DefaultJsonProtocol.{StringJsonFormat, mapFormat}
 import spray.json.enrichAny
 
