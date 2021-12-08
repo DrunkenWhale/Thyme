@@ -8,6 +8,8 @@ exportJars:= true
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8")
 
+
+
 val AkkaVersion = "2.6.17"
 val AkkaHttpVersion = "10.2.7"
 

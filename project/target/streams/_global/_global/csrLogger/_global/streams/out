@@ -1,0 +1,12 @@
+[debug] downloaded https://repo1.maven.org/maven2/com/github/sbt/sbt-native-packager_2.12_1.0/1.9.4/sbt-native-packager-1.9.4.pom
+[debug] downloaded https://repo1.maven.org/maven2/org/apache/ant/ant/1.10.9/ant-1.10.9.pom
+[debug] downloaded https://repo1.maven.org/maven2/org/apache/commons/commons-compress/1.20/commons-compress-1.20.pom
+[debug] downloaded https://repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.12/2.0.0/scala-parser-combinators_2.12-2.0.0.pom
+[debug] downloaded https://repo1.maven.org/maven2/org/apache/ant/ant-parent/1.10.9/ant-parent-1.10.9.pom
+[debug] downloaded https://repo1.maven.org/maven2/org/apache/ant/ant-launcher/1.10.9/ant-launcher-1.10.9.pom
+[debug] downloaded https://repo1.maven.org/maven2/org/scala-lang/modules/scala-parser-combinators_2.12/2.0.0/scala-parser-combinators_2.12-2.0.0.jar
+[debug] downloaded https://repo1.maven.org/maven2/org/apache/ant/ant-launcher/1.10.9/ant-launcher-1.10.9.jar
+[debug] downloaded https://repo1.maven.org/maven2/org/apache/commons/commons-compress/1.20/commons-compress-1.20.jar
+[debug] downloaded https://repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.12/1.1.1/scala-xml_2.12-1.1.1.jar
+[debug] downloaded https://repo1.maven.org/maven2/com/github/sbt/sbt-native-packager_2.12_1.0/1.9.4/sbt-native-packager-1.9.4.jar
+[debug] downloaded https://repo1.maven.org/maven2/org/apache/ant/ant/1.10.9/ant-1.10.9.jar
