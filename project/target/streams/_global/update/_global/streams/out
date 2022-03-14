@@ -1,4 +1,3 @@
 [debug] not up to date. inChanged = true, force = false
-[debug] Updating ProjectRef(uri("file:/D:/ScalaProject/Thyme/project/"), "thyme-build")...
-[warn] Unrecognized repository Scala Plugin Bundled Repository, ignoring it
-[debug] Done updating ProjectRef(uri("file:/D:/ScalaProject/Thyme/project/"), "thyme-build")
+[debug] Updating ProjectRef(uri("file:/D:/Project/Thyme/project/"), "thyme-build")...
+[debug] Done updating ProjectRef(uri("file:/D:/Project/Thyme/project/"), "thyme-build")
