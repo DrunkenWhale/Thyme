@@ -1,12 +1,7 @@
 package request
 
-case class ServerBlueprint(method: String, path: String, params: List[String])
+import scala.reflect.ClassTag
 
-object ServerBlueprint {
-  
-  given tupleToServerBlueprint: Conversion[((String, String), List[String]), ServerBlueprint] with {
-    override def apply(x: ((String, String), List[String])): ServerBlueprint =
-      ServerBlueprint(x._1._1, x._1._2, x._2)
-  }
-  
-}
+case class ServerBlueprint(name: String, method: String, path: String, params: List[String],clsTag:ClassTag[_])
+
+object ServerBlueprint {}

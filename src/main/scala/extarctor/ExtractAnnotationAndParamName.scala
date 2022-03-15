@@ -2,20 +2,19 @@ package extarctor
 
 import scala.quoted.*
 
-inline def extractAnnotationAndParamName[E](x: E) = $ {
-  extractRouteAnnotationImpl('x)
+inline def extractAnnotationAndParamName[E]: List[(String, (String, String), List[String])] = $ {
+  extractRouteAnnotationImpl[E]
 }
 
 
-private def extractRouteAnnotationImpl[E](expr: Expr[E])(using quotes: Quotes, tpe: Type[E])
-: Expr[List[((String, String), List[String])]] = {
+private def extractRouteAnnotationImpl[T](using quotes: Quotes, tpe: Type[T])
+: Expr[List[(String, (String, String), List[String])]] = {
   import quotes.reflect.*
 
   /**
    * be sure to call this function
    * the method must have `Route` annotation
    * */
-
   def extractMethodAndPath(method: Symbol): (String, String) = {
 
     val route = method.getAnnotation(TypeTree.of[Route].symbol).get match {
@@ -37,16 +36,23 @@ private def extractRouteAnnotationImpl[E](expr: Expr[E])(using quotes: Quotes, t
    * will be used in route
    * all name will be injected into method
    * */
-  def extractMethodParamName[T](method: Symbol): List[String] = {
+  def extractMethodParamName(method: Symbol): List[String] = {
     method.paramSymss(0).map(x => x.name)
   }
 
+  /**
+   * given a method:Symbol, return its name
+   * */
+  def extractMethodName(method: Symbol): String = {
+    method.name
+  }
 
-  val methods = TypeTree.of[E].symbol.declaredMethods
+  val methods = TypeTree.of[T].symbol.declaredMethods
 
-  val routeList = methods.map(method => (extractMethodAndPath(method), extractMethodParamName(method)))
+  val routeList = methods.map(method => (extractMethodName(method), extractMethodAndPath(method), extractMethodParamName(method)))
 
   Expr(routeList)
+
 }
 
 
