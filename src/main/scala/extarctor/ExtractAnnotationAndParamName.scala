@@ -2,12 +2,13 @@ package extarctor
 
 import scala.quoted.*
 
-inline def extract[E](x: E) = $ {
+inline def extractAnnotationAndParamName[E](x: E) = $ {
   extractRouteAnnotationImpl('x)
 }
 
 
-private def extractRouteAnnotationImpl[E](expr: Expr[E])(using quotes: Quotes, tpe: Type[E]): Expr[List[((String, String), List[String])]] = {
+private def extractRouteAnnotationImpl[E](expr: Expr[E])(using quotes: Quotes, tpe: Type[E])
+: Expr[List[((String, String), List[String])]] = {
   import quotes.reflect.*
 
   /**
