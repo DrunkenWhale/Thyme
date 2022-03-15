@@ -1,0 +1,5 @@
+package boot
+
+class ServerRegister {
+
+}

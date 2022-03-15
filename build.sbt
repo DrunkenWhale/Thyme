@@ -1,15 +1,8 @@
-name := "Thyme"
+ThisBuild / version := "0.1.0-SNAPSHOT"
 
-version := "0.0.1"
+ThisBuild / scalaVersion := "3.1.1"
 
-scalaVersion := "3.1.1"
-
-exportJars:= true
-
-scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8")
-
-libraryDependencies ++= Seq(
-
-)
-
-
+lazy val root = (project in file("."))
+  .settings(
+    name := "Thyme"
+  )
