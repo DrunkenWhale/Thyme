@@ -1,4 +1,4 @@
-package extarctor
+package thyme.dsl
 
 enum Method {
   case Get extends Method

@@ -1,4 +1,4 @@
-package request
+package thyme
 
 import scala.reflect.ClassTag
 
