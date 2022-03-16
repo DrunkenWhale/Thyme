@@ -1,7 +1,7 @@
 package thyme
 
-import scala.reflect.ClassTag
+import thyme.dsl.Complete
 
-case class ServerBlueprint(name: String, method: String, path: String, params: List[String],clsTag:ClassTag[_])
+case class ServerBlueprint(lambda: () => Complete)
 
 object ServerBlueprint {}
