@@ -9,42 +9,54 @@ import scala.collection.mutable
 case class RouteNode(
                         matchedPath: String,
                         children: mutable.HashMap[String, RouteNode],
-                        var handler: HttpExchange => Complete = null
+                        var handler: HttpExchange => Complete | Null = null
                     )
 
 
 object RouteNode {
 
+  def main(args: Array[String]): Unit = {
+    buildRoute("/api/route/c/", (httpExchange: HttpExchange) => Complete("114"))
+    println(matchRoute("/api/route/c"))
+  }
+
   def buildRoute(path: String, handler: HttpExchange => Complete): Unit = {
-    buildRouteImpl(RouteTree.rootRouteNode, path.split("/").toList)(using handler: HttpExchange => Complete)
+    buildRouteImpl(RouteTree.rootRouteNode, path.split("/").toList.tail)(using handler)
   }
 
   @tailrec
-  def buildRouteImpl(currentNode: RouteNode, routeNodePathList: List[String])(using handler: HttpExchange => Complete): Unit = {
-    val isNextNodeExist: Boolean = routeNodePathList.size == 1
-    val currentNodePath = routeNodePathList.head
-    if (isNextNodeExist) {
-      if (currentNode.children.contains(currentNodePath)) {
-        buildRouteImpl(currentNode.children(currentNodePath), routeNodePathList.tail)
-      } else {
-        currentNode.children.put(currentNodePath, RouteNode(currentNode.matchedPath + '/' + currentNodePath, mutable.HashMap.empty))
-      }
+  private def buildRouteImpl(currentNode: RouteNode, routeNodePathList: List[String])(using handler: HttpExchange => Complete): Unit = {
+
+    if (routeNodePathList.isEmpty) {
+      currentNode.handler = handler
+      return
+    }
+
+    val currentNodePath: String = routeNodePathList.head
+
+    val childrenNodeOpt = currentNode.children.get(currentNodePath)
+
+    if (childrenNodeOpt.isDefined) {
+
+      val childrenNode = childrenNodeOpt.get
+      buildRouteImpl(childrenNode, routeNodePathList.tail)
+
     } else {
-      if (currentNode.children.contains(currentNodePath)) {
-        currentNode.children(currentNodePath).handler = handler
-      } else {
-        currentNode.children.put(currentNodePath, RouteNode(currentNode.matchedPath + '/' + currentNodePath, mutable.HashMap.empty))
-      }
+
+      val childrenNode = RouteNode(currentNode.matchedPath + "/" + currentNodePath, mutable.HashMap.empty)
+      currentNode.children.put(currentNodePath, childrenNode)
+      buildRouteImpl(childrenNode, routeNodePathList.tail)
+
     }
   }
 
-  def matchRoute(path: String): Unit = {
+  def matchRoute(path: String): RouteNode = {
     val routeNodePathList = path.split("/")
-    matchRouteImpl(RouteTree.rootRouteNode, routeNodePathList.toList)
+    matchRouteImpl(RouteTree.rootRouteNode, routeNodePathList.toList.tail)
   }
 
   @tailrec
-  def matchRouteImpl(currentNode: RouteNode, routeNodePathList: List[String]): RouteNode = {
+  private def matchRouteImpl(currentNode: RouteNode, routeNodePathList: List[String]): RouteNode = {
     if (routeNodePathList.isEmpty) {
       return currentNode
     }

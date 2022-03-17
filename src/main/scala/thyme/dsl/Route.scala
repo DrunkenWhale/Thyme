@@ -69,10 +69,4 @@ object Route {
 
   type CompleteType = Complete
 
-  def main(args: Array[String]): Unit = {
-    get("/api")("name") { name =>
-      new CompleteType
-    }
-  }
-
 }

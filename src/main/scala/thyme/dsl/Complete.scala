@@ -1,6 +1,6 @@
 package thyme.dsl
 
-class Complete {
+case class Complete(name:String) {
 
 }
 
