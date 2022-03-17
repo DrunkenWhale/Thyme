@@ -1,8 +1,6 @@
 
 //import thyme.boot.ServerRegister
 
-import thyme.extarctor.Route
-
 object Test {
   def main(args: Array[String]): Unit = {
 

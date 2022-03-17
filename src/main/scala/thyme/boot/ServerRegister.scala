@@ -12,6 +12,7 @@ object ServerRegister {
 
   private[thyme] val httpServer: HttpServer = HttpServer.create()
 
+  // path => server
   private[thyme] val routeMap: mutable.HashMap[String, String] = mutable.HashMap.empty
 
   def mount(path: String): Unit = {
