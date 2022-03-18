@@ -1,0 +1,191 @@
+[33mcommit 94a2d67e60fd4fdfdbf3d145ae691fd57b97189c[m[33m ([m[1;36mHEAD -> [m[1;32mdev[m[33m, [m[1;31morigin/dev[m[33m)[m
+Author: pigeon_gugugu <892197240@qq.com>
+Date:   Fri Mar 18 11:31:31 2022 +0800
+
+    feat:add new class => Handle && Complete && Get/Post/Put/Delete && start succeed!
+
+[33mcommit 6401e864f4323094ec3eb2ad2a8cd5cbb872fc1f[m
+Author: pigeon_gugugu <892197240@qq.com>
+Date:   Fri Mar 18 00:10:16 2022 +0800
+
+    feat: new get part
+
+[33mcommit 3c0a75fd8bf275ec558b61f13962a53271f13f5f[m
+Author: pigeon_gugugu <892197240@qq.com>
+Date:   Thu Mar 17 22:26:28 2022 +0800
+
+    feat: path?
+
+[33mcommit f252d5e1cc6b1f54d617df6ea0caa390f6d5317e[m
+Author: pigeon_gugugu <892197240@qq.com>
+Date:   Thu Mar 17 21:35:25 2022 +0800
+
+    fix: fix bug : when register /api/a , match /api will succeed
+
+[33mcommit 98bbce81943095a6d4f6d6fe69716357de3f85a6[m
+Author: pigeon_gugugu <892197240@qq.com>
+Date:   Thu Mar 17 18:56:39 2022 +0800
+
+    feat: static route match and build
+
+[33mcommit 2a5b92f50b2635b8d85d86dde7e759260542b6ae[m
+Author: pigeon_gugugu <892197240@qq.com>
+Date:   Thu Mar 17 17:34:06 2022 +0800
+
+    feat: route match basic part
+
+[33mcommit 823bceca08f475ecd0f869f200464ea8668bb6e2[m
+Author: pigeon_gugugu <892197240@qq.com>
+Date:   Thu Mar 17 00:00:28 2022 +0800
+
+    feat: some method in Route
+
+[33mcommit a04ee22527768ca3aa48f24b980ddbde8f2e3a88[m
+Author: pigeon_gugugu <892197240@qq.com>
+Date:   Wed Mar 16 21:24:27 2022 +0800
+
+    fix: response InputStream must be close
+
+[33mcommit 71bc1a8b2badb6c3c78255c5969131655637d3e9[m
+Author: pigeon_gugugu <892197240@qq.com>
+Date:   Wed Mar 16 13:24:35 2022 +0800
+
+    feat: route method...but is it must from 0 to 22?
+
+[33mcommit cc00790e58c0b22ef8704b5be1899b90d6c1e782[m
+Author: pigeon_gugugu <892197240@qq.com>
+Date:   Wed Mar 16 09:43:17 2022 +0800
+
+    feat: remove .idea
+
+[33mcommit 4e6c20838e60bca68e575e462db6185afc71af2e[m
+Author: pigeon_gugugu <892197240@qq.com>
+Date:   Wed Mar 16 00:09:59 2022 +0800
+
+    feat: basic part, mount method
+
+[33mcommit eddc2e21a31c4d0a11306f86cb05eb0a2f6f6f77[m
+Author: pigeon_gugugu <892197240@qq.com>
+Date:   Tue Mar 15 17:13:22 2022 +0800
+
+    feat: extractor and ServerBlueprint
+
+[33mcommit 7789eeb7878675049906b68723ff52f85ce61c63[m
+Author: pigeon_gugugu <892197240@qq.com>
+Date:   Tue Mar 15 16:41:26 2022 +0800
+
+    feat: add .gitignore file
+
+[33mcommit 50f54a9c44998304376f9158021ef13b7d885166[m
+Author: pigeon_gugugu <892197240@qq.com>
+Date:   Tue Mar 15 16:39:54 2022 +0800
+
+    chore: maven => sbt
+
+[33mcommit ade2bf74d47d03d41c1963a2571a90523130c667[m
+Author: pigeon_gugugu <892197240@qq.com>
+Date:   Mon Mar 14 13:29:30 2022 +0800
+
+    restart
+
+[33mcommit c53ee3c4b552ae4f5b113d1f0dfc6282507890d3[m
+Author: pigeon_gugugu <892197240@qq.com>
+Date:   Thu Dec 9 23:40:34 2021 +0800
+
+    docs: update README.md
+
+[33mcommit b12b0aa461e5ed8d0557bc473abc48e2f4af5bc3[m
+Author: pigeon_gugugu <892197240@qq.com>
+Date:   Wed Dec 8 09:40:55 2021 +0800
+
+    chore: sbt => maven, add .gitignore
+
+[33mcommit 6eda65d3d663120d9e8e4dd160898049bfa8f59f[m
+Author: pigeon_gugugu <892197240@qq.com>
+Date:   Tue Dec 7 23:36:20 2021 +0800
+
+    refactor: adjust project structure
+
+[33mcommit 882693e9fd9f14bdc96296663acf6f07c57b1c73[m
+Author: pigeon_gugugu <892197240@qq.com>
+Date:   Tue Dec 7 23:19:44 2021 +0800
+
+    feat: package jar is difficult in sbt,so i choose maven!
+
+[33mcommit e3fa7c29086ae7a258db4d748ca4f44c012f5752[m
+Author: pigeon_gugugu <892197240@qq.com>
+Date:   Tue Dec 7 23:19:08 2021 +0800
+
+    feat: package jar is difficult in sbt,so i choose maven!
+
+[33mcommit dac1d7bc60d506b969b9730b9316603f78a18267[m
+Author: pigeon_gugugu <892197240@qq.com>
+Date:   Tue Dec 7 15:35:18 2021 +0800
+
+    fix: fix a bug that path will never be find if it start with '/'
+
+[33mcommit 2b888f3dbbe33d37562f98e133f187050467b811[m
+Author: pigeon_gugugu <892197240@qq.com>
+Date:   Mon Dec 6 23:35:58 2021 +0800
+
+    feat: add logger color,but ... the warning is still exist
+
+[33mcommit 3a7bb684ddfdf3c5e4d3468de3703b9ef67b1cfb[m
+Author: pigeon_gugugu <892197240@qq.com>
+Date:   Mon Dec 6 15:18:33 2021 +0800
+
+    feat: add basic logger
+
+[33mcommit 907c5a41ffbd47cb51814b79a6eb856ed2bca9eb[m
+Author: pigeon_gugugu <892197240@qq.com>
+Date:   Sun Dec 5 23:02:41 2021 +0800
+
+    fix : path only contains one or zero '/' will not cause Exception
+
+[33mcommit dc67c77df187360292360494bea9b91863f6a28e[m
+Author: pigeon_gugugu <892197240@qq.com>
+Date:   Sun Dec 5 21:48:05 2021 +0800
+
+    fix: fix path can
+
+[33mcommit ea406b681f538488c0410da290466b91424ae7c7[m
+Author: pigeon_gugugu <892197240@qq.com>
+Date:   Sun Dec 5 17:44:43 2021 +0800
+
+    feat: add interceptor part
+
+[33mcommit ad2a5efb4a7933af8b133aff91f5e0ee5a2a3ffc[m
+Author: pigeon_gugugu <892197240@qq.com>
+Date:   Sat Dec 4 22:45:15 2021 +0800
+
+    feat: add basic interceptor
+
+[33mcommit 1ad21fb1bcaa43b386b9c754f0d2a9e152b373f5[m
+Author: pigeon_gugugu <892197240@qq.com>
+Date:   Sat Dec 4 00:38:19 2021 +0800
+
+    feat: add response and cors config
+
+[33mcommit 8165f0e74d480372177c3d5f2b62b5c7eb33d043[m
+Author: pigeon_gugugu <892197240@qq.com>
+Date:   Fri Dec 3 10:08:24 2021 +0800
+
+    docs: add unclear README text
+
+[33mcommit 91113f96944d851864cfc657347c486049399414[m
+Author: pigeon_gugugu <892197240@qq.com>
+Date:   Fri Dec 3 10:03:38 2021 +0800
+
+    feat: add context class
+
+[33mcommit a6a03c31545d6886b0ceee00a600fc0f45769cfe[m
+Author: pigeon_gugugu <892197240@qq.com>
+Date:   Thu Dec 2 17:29:57 2021 +0800
+
+    feature :add basic method
+
+[33mcommit 98d971d34ede13f8230ce7334b9d696e29dfe42c[m
+Author: pigeon_gugugu <892197240@qq.com>
+Date:   Thu Dec 2 11:37:41 2021 +0800
+
+    version=0.01
