@@ -7,14 +7,12 @@ class Extractor {
 }
 
 object Extractor {
-  def extractor(httpExchange: HttpExchange): Unit = {
+  def extractor(httpExchange: HttpExchange): Context = {
 
-    val header: Map[String, String] =
-      httpExchange
-          .getRequestHeaders
-          .asInstanceOf[Map[String, List[String]]]
-          .map((key, valueList) => (key, valueList.mkString(" ")))
-          .toMap
+    val header: Map[String, String] = {
+      val headers = httpExchange.getRequestHeaders
+      headers.keySet().toArray().map(key => (key.asInstanceOf[String], headers.get(key).toArray().mkString(" "))).toMap
+    }
 
     val form: Map[String, String] = {
       String(httpExchange.getRequestBody.readAllBytes())
@@ -38,7 +36,7 @@ object Extractor {
           .toMap
     }
 
-    Context(header = header, form = form, arg = arg)
+    Context(header = header, form = form, parameter = arg)
 
   }
 

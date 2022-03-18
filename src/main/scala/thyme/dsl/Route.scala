@@ -1,6 +1,7 @@
 package thyme.dsl
 
-import thyme.dsl.Method.{Get, Post, Put, Delete}
+import thyme.dsl.Method.{Delete, Get, Post, Put}
+import thyme.response.Complete
 
 object Route {
 

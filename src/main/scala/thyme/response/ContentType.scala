@@ -1,0 +1,11 @@
+package thyme.response
+
+enum ContentType(val contentType: String) {
+
+  case `application/xml` extends ContentType("application/xml")
+  case `application/json` extends ContentType("application/json")
+  case `text/plain` extends ContentType("text/plain")
+  case `text/html` extends ContentType("text/html")
+  case `text/xml` extends ContentType("text/xml")
+  // MORE
+}
