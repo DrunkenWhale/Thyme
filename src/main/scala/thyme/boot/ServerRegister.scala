@@ -40,6 +40,14 @@ object ServerRegister {
     routes.foreach(route => RouteTree.buildRoute(route.path.result(), route.handle))
   }
 
+  // side effect
+  def res(httpExchange: HttpExchange, statusCode: Int, responseBody: String): Unit = {
+    httpExchange.sendResponseHeaders(statusCode, responseBody.length)
+    httpExchange.getResponseBody.write(responseBody.getBytes(StandardCharsets.UTF_8))
+    httpExchange.getResponseBody.flush()
+    httpExchange.getResponseBody.close()
+  }
+
 
   def main(args: Array[String]): Unit = {
 
@@ -58,23 +66,17 @@ object ServerRegister {
       //      val str = httpExchange.getRequestURI.getRawQuery
       val path = httpExchange.getRequestURI.getPath
       val route = RouteTree.matchRoute(path)
+      // path don't match any node in routeTree
       if (route == null) {
-        val resultString = "Not Found"
-        httpExchange.sendResponseHeaders(404, resultString.length)
-        httpExchange.getResponseBody.write(resultString.getBytes(StandardCharsets.UTF_8))
-        httpExchange.getResponseBody.flush()
-        httpExchange.getResponseBody.close()
+        res(httpExchange, 404, "Not Found")
       } else {
         val complete: Complete = route.handle(httpExchange)
-        val resultString = complete.entity.responseBody
         val responseHeader = httpExchange.getResponseHeaders
         val contentTypeList = new util.LinkedList[String]()
         contentTypeList.add(complete.entity.contentType.contentType)
         responseHeader.put("Content-Type", contentTypeList)
-        httpExchange.sendResponseHeaders(complete.statusCode, resultString.length)
-        httpExchange.getResponseBody.write(resultString.getBytes(StandardCharsets.UTF_8))
-        httpExchange.getResponseBody.flush()
-        httpExchange.getResponseBody.close()
+        res(httpExchange, complete.statusCode, complete.entity.responseBody)
+
       }
 
 
