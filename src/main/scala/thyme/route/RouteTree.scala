@@ -6,6 +6,8 @@ import thyme.response.Complete
 import scala.annotation.tailrec
 import scala.collection.mutable
 
+// be careful , don't overload the route register before
+
 object RouteTree {
 
   private[thyme] val rootRouteNode = RouteNode("", mutable.HashMap.empty)
@@ -78,16 +80,15 @@ object RouteTree {
         return null
       }
     }
-    val path = routeNodePathList.head
-    val currentNodePath = if (path.startsWith(":")) {
-      ":"
-    } else {
-      path
-    }
+    val currentNodePath  = routeNodePathList.head
     if (currentNode.children.contains(currentNodePath)) {
       matchRouteImpl(currentNode.children(routeNodePathList.head), routeNodePathList.tail)
     } else {
-      null
+      if(currentNode.children.contains(":")){
+        matchRouteImpl(currentNode.children(":"), routeNodePathList.tail)
+      }else{
+        null
+      }
     }
   }
 }

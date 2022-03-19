@@ -36,7 +36,7 @@ object ServerRegister {
     httpServer.start()
   }
 
-  def bind(routes: Route*): Unit = {
+  def bind(routes: Seq[Route]): Unit = {
     routes.foreach(route => RouteTree.buildRoute(route.path.result(), route.handle))
   }
 
@@ -46,6 +46,10 @@ object ServerRegister {
     ServerRegister.bind(path("/api") {
       get(parameter("word")) { word =>
         Complete(200, Entity(ContentType.`application/xml`, s"Hello $word"))
+      }
+    } ~ path("/c/:name/b") {
+      get { () =>
+        Complete(200, Entity(ContentType.`application/xml`, s"Hello world"))
       }
     })
 
