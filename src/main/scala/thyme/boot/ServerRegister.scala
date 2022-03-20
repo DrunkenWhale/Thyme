@@ -15,7 +15,7 @@ import java.util
 import java.util.concurrent.{Executor, Executors}
 import scala.collection.mutable
 
-class ServerRegister {
+private class ServerRegister {
 
 }
 
@@ -24,12 +24,7 @@ object ServerRegister {
 
   private[thyme] val httpServer: HttpServer = HttpServer.create()
 
-  // path => server
   private[thyme] val routeMap: mutable.HashMap[String, String] = mutable.HashMap.empty
-
-  def mount(path: String): Unit = {
-    httpServer.createContext(path)
-  }
 
   def run(port: Int, backlog: Int): Unit = {
     httpServer.bind(new InetSocketAddress(port), backlog)
@@ -40,8 +35,12 @@ object ServerRegister {
     routes.foreach(route => RouteTree.buildRoute(route.path.result(), route.handle))
   }
 
+  def bind(route: Route): Unit = {
+    RouteTree.buildRoute(route.path.result(), route.handle)
+  }
+
   // side effect
-  def res(httpExchange: HttpExchange, statusCode: Int, responseBody: String): Unit = {
+  private def res(httpExchange: HttpExchange, statusCode: Int, responseBody: String): Unit = {
     httpExchange.sendResponseHeaders(statusCode, responseBody.length)
     httpExchange.getResponseBody.write(responseBody.getBytes(StandardCharsets.UTF_8))
     httpExchange.getResponseBody.flush()
@@ -49,40 +48,38 @@ object ServerRegister {
   }
 
 
-  def main(args: Array[String]): Unit = {
-
-    ServerRegister.bind(path("/api") {
-      get(parameter("word")) { word =>
-        Complete(200, Entity(ContentType.`application/xml`, s"Hello $word"))
-      }
-    } ~ path("/c/:name/b") {
-      get { () =>
-        Complete(200, Entity(ContentType.`application/xml`, s"Hello world"))
-      }
-    })
-
-    // all handler will be register in root path
-    ServerRegister.httpServer.createContext("/", (httpExchange: HttpExchange) => {
-      //      val str = httpExchange.getRequestURI.getRawQuery
-      val path = httpExchange.getRequestURI.getPath
-      val route = RouteTree.matchRoute(path)
-      // path don't match any node in routeTree
-      if (route == null) {
-        res(httpExchange, 404, "Not Found")
-      } else {
-        val complete: Complete = route.handle(httpExchange)
-        val responseHeader = httpExchange.getResponseHeaders
-        val contentTypeList = new util.LinkedList[String]()
-        contentTypeList.add(complete.entity.contentType.contentType)
-        responseHeader.put("Content-Type", contentTypeList)
-        res(httpExchange, complete.statusCode, complete.entity.responseBody)
-
-      }
-
-
-    })
-    ServerRegister.httpServer.setExecutor(Executors.newFixedThreadPool(10))
-    ServerRegister.run(9090, 0)
-  }
+//  def main(args: Array[String]): Unit = {
+//
+//    ServerRegister.bind(path("/api") {
+//      get(parameter("word")) { word =>
+//        Complete(200, Entity(ContentType.`application/xml`, s"Hello $word"))
+//      }
+//    } ~ path("/c/:name/b") {
+//      get { () =>
+//        Complete(200, Entity(ContentType.`application/xml`, s"Hello world"))
+//      }
+//    }
+//    )
+//
+//    // all handler will be register in root path
+//    ServerRegister.httpServer.createContext("/", (httpExchange: HttpExchange) => {
+//
+//      val path = httpExchange.getRequestURI.getPath
+//      val route = RouteTree.matchRoute(path)
+//      // path don't match any node in routeTree
+//      if (route == null) {
+//        res(httpExchange, 404, "Not Found")
+//      } else {
+//        val complete: Complete = route.handle(httpExchange)
+//        val responseHeader = httpExchange.getResponseHeaders
+//        val contentTypeList = new util.LinkedList[String]()
+//        contentTypeList.add(complete.entity.contentType.contentType)
+//        responseHeader.put("Content-Type", contentTypeList)
+//        res(httpExchange, complete.statusCode, complete.entity.responseBody)
+//      }
+//    })
+//    ServerRegister.httpServer.setExecutor(Executors.newFixedThreadPool(10))
+//    ServerRegister.run(9090, 0)
+//  }
 }
 
