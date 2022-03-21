@@ -1,7 +1,8 @@
 import thyme.boot.ThymeApplication
 import thyme.dsl.rest.Get.get
 import thyme.response.{Complete, ContentType, Entity}
-import thyme.dsl.Path.path
+import thyme.dsl.Path.*
+import thyme.dsl.rest.Post.post
 
 object Test {
   def main(args: Array[String]): Unit = {
@@ -9,6 +10,16 @@ object Test {
       path("/api") {
         get { () =>
           Complete(200, Entity(contentType = ContentType.`application/json`, responseBody = "{name:1}"))
+        }
+      } ~ path("/") {
+        post {
+          () =>
+            Complete(200, Entity(contentType = ContentType.`application/json`, responseBody = "{name:114}"))
+        }
+      } ~ path("/") {
+        get {
+          () =>
+            Complete(200, Entity(contentType = ContentType.`application/json`, responseBody = "{name:114}"))
         }
       }
     ThymeApplication

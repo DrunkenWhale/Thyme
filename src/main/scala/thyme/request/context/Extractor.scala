@@ -37,7 +37,13 @@ object Extractor {
           .toMap
     }
 
-    Context(header = header, form = form, parameter = parameter, url = httpExchange.getRequestURI.toURL.toString)
+    Context(
+      path = httpExchange.getRequestURI.getPath,
+      method = httpExchange.getRequestMethod,
+      header = header,
+      form = form,
+      parameter = parameter
+    )
 
   }
 

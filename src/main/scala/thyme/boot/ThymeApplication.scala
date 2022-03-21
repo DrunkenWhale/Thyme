@@ -32,10 +32,19 @@ private class ThymeApplication {
       val path = httpExchange.getRequestURI.getPath
       val route = RouteTree.matchRoute(path)
       // path don't match any node in routeTree
-      if (route == null) {
+      if (route == null || (path == "/") && (route.handlers.isEmpty)) {
         res(httpExchange, 404, "Not Found")
       } else {
-        val complete: Complete = route.handlers(httpExchange.getRequestMethod)(httpExchange)
+        val handlerOpt = route.handlers.get(httpExchange.getRequestMethod)
+        if (handlerOpt.isEmpty) {
+          res(httpExchange, 405, "Method Not Allowed")
+          return
+        }
+
+        //--------------lambda user define-------------------
+        val complete: Complete = handlerOpt.get(httpExchange)
+        //---------------------------------------------------
+
         setResponseHeader(httpExchange, ("Content-Type", complete.entity.contentType.contentType))
         res(httpExchange, complete.statusCode, complete.entity.responseBody)
       }
