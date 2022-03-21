@@ -1,8 +1,8 @@
 import thyme.boot.ThymeApplication
+import thyme.dsl.rest.Get.get
 import thyme.response.{Complete, ContentType, Entity}
-import thyme.request.path.Path.path
-import thyme.request.path.Path
-import thyme.request.rest.Get.get
+import thyme.dsl.Path.path
+
 object Test {
   def main(args: Array[String]): Unit = {
     val route =

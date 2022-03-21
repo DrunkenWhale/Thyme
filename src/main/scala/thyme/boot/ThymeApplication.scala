@@ -3,9 +3,9 @@ package thyme.boot
 import com.sun.net.httpserver.{HttpExchange, HttpServer}
 import thyme.boot.ServerRegister.httpServer
 import thyme.boot.ThymeApplication.{res, setResponseHeader}
-import thyme.request.Route
-import thyme.request.route.RouteTree
+import thyme.request.Node
 import thyme.response.{Complete, ContentType}
+import thyme.route.RouteTree
 
 import java.net.InetSocketAddress
 import java.nio.charset.StandardCharsets
@@ -17,12 +17,12 @@ private class ThymeApplication {
 
   private[thyme] val routeMap: mutable.HashMap[String, String] = mutable.HashMap.empty
 
-  def mount(routes: Seq[Route]): ThymeApplication = {
+  def mount(routes: Seq[Node]): ThymeApplication = {
     routes.foreach(route => RouteTree.buildRoute(route.path.result(), route.handle))
     this
   }
 
-  def mount(route: Route): ThymeApplication = {
+  def mount(route: Node): ThymeApplication = {
     RouteTree.buildRoute(route.path.result(), route.handle)
     this
   }

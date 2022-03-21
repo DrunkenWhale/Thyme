@@ -2,12 +2,11 @@ package thyme.boot
 
 import com.sun.net.httpserver.spi.HttpServerProvider
 import com.sun.net.httpserver.{HttpExchange, HttpServer}
-import thyme.request.Route
+import thyme.request.Node
 import thyme.response.{Complete, Entity}
-import thyme.request.path.Path.*
-import thyme.request.rest.ContextParam.*
-import thyme.request.route.RouteTree
+import thyme.dsl.Path.*
 import thyme.response.ContentType
+import thyme.route.RouteTree
 
 import java.net.InetSocketAddress
 import java.nio.charset.StandardCharsets
@@ -31,11 +30,11 @@ object ServerRegister {
     httpServer.start()
   }
 
-  def bind(routes: Seq[Route]): Unit = {
+  def bind(routes: Seq[Node]): Unit = {
     routes.foreach(route => RouteTree.buildRoute(route.path.result(), route.handle))
   }
 
-  def bind(route: Route): Unit = {
+  def bind(route: Node): Unit = {
     RouteTree.buildRoute(route.path.result(), route.handle)
   }
 
