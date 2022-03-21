@@ -18,12 +18,12 @@ private class ThymeApplication {
   private[thyme] val routeMap: mutable.HashMap[String, String] = mutable.HashMap.empty
 
   def mount(routes: Seq[Node]): ThymeApplication = {
-    routes.foreach(route => RouteTree.buildRoute(route.path.result(), route.handle))
+    routes.foreach(route => RouteTree.buildRoute(route.path.result(), route.method, route.handler))
     this
   }
 
   def mount(route: Node): ThymeApplication = {
-    RouteTree.buildRoute(route.path.result(), route.handle)
+    RouteTree.buildRoute(route.path.result(), route.method, route.handler)
     this
   }
 
@@ -35,7 +35,7 @@ private class ThymeApplication {
       if (route == null) {
         res(httpExchange, 404, "Not Found")
       } else {
-        val complete: Complete = route.handle(httpExchange)
+        val complete: Complete = route.handlers(httpExchange.getRequestMethod)(httpExchange)
         setResponseHeader(httpExchange, ("Content-Type", complete.entity.contentType.contentType))
         res(httpExchange, complete.statusCode, complete.entity.responseBody)
       }

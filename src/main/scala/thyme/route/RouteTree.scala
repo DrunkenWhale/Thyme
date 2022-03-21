@@ -12,23 +12,23 @@ object RouteTree {
 
   private[thyme] val rootRouteNode = RouteNode("", mutable.HashMap.empty)
 
-  def buildRoute(path: String, handler: HttpExchange => Complete): Unit = {
+  def buildRoute(path: String, method: String, handler: HttpExchange => Complete): Unit = {
     if (!path.startsWith("/")) {
       throw new IllegalArgumentException("path must start with '/'")
     }
     if (path == "/") {
-      RouteTree.rootRouteNode.handle = handler
+      RouteTree.rootRouteNode.handlers.put(method, handler)
     } else {
-      buildRouteImpl(RouteTree.rootRouteNode, path.split("/").toList.tail)(using handler)
+      buildRouteImpl(RouteTree.rootRouteNode, path.split("/").toList.tail)(using method, handler)
     }
   }
 
 
   @tailrec
-  private def buildRouteImpl(currentNode: RouteNode, routeNodePathList: List[String])(using handle: HttpExchange => Complete): Unit = {
+  private def buildRouteImpl(currentNode: RouteNode, routeNodePathList: List[String])(using method: String, handler: HttpExchange => Complete): Unit = {
 
     if (routeNodePathList.isEmpty) {
-      currentNode.handle = handle
+      currentNode.handlers.put(method, handler)
       return
     }
 
@@ -73,20 +73,20 @@ object RouteTree {
   private def matchRouteImpl(currentNode: RouteNode, routeNodePathList: List[String]): RouteNode = {
 
     if (routeNodePathList.isEmpty) {
-      if (currentNode.handle != null) {
+      if (currentNode.handlers.nonEmpty) {
         return currentNode
       }
       else {
         return null
       }
     }
-    val currentNodePath  = routeNodePathList.head
+    val currentNodePath = routeNodePathList.head
     if (currentNode.children.contains(currentNodePath)) {
       matchRouteImpl(currentNode.children(routeNodePathList.head), routeNodePathList.tail)
     } else {
-      if(currentNode.children.contains(":")){
+      if (currentNode.children.contains(":")) {
         matchRouteImpl(currentNode.children(":"), routeNodePathList.tail)
-      }else{
+      } else {
         null
       }
     }
