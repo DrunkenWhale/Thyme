@@ -2,9 +2,9 @@ package thyme.boot
 
 import com.sun.net.httpserver.{HttpExchange, HttpServer}
 import thyme.boot.ServerRegister.httpServer
-import thyme.boot.ThymeApplication.res
+import thyme.boot.ThymeApplication.{res, setResponseHeader}
 import thyme.request.Route
-import thyme.response.Complete
+import thyme.response.{Complete, ContentType}
 import thyme.route.RouteTree
 
 import java.net.InetSocketAddress
@@ -36,10 +36,7 @@ private class ThymeApplication {
         res(httpExchange, 404, "Not Found")
       } else {
         val complete: Complete = route.handle(httpExchange)
-        val responseHeader = httpExchange.getResponseHeaders
-        val contentTypeList = new java.util.LinkedList[String]()
-        contentTypeList.add(complete.entity.contentType.contentType)
-        responseHeader.put("Content-Type", contentTypeList)
+        setResponseHeader(httpExchange, ("Content-Type", complete.entity.contentType.contentType))
         res(httpExchange, complete.statusCode, complete.entity.responseBody)
       }
     })
@@ -59,6 +56,13 @@ object ThymeApplication {
     httpExchange.getResponseBody.write(responseBody.getBytes(StandardCharsets.UTF_8))
     httpExchange.getResponseBody.flush()
     httpExchange.getResponseBody.close()
+  }
+
+  //side effect
+  private def setResponseHeader(httpExchange: HttpExchange, keyValueTuples: (String, String)*): Unit = {
+    keyValueTuples.foreach(keyValueTuple =>
+      httpExchange.getResponseHeaders.add(keyValueTuple._1, keyValueTuple._2)
+    )
   }
 
 }

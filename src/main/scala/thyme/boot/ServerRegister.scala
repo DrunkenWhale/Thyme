@@ -6,7 +6,7 @@ import thyme.request.Route
 import thyme.response.{Complete, Entity}
 import thyme.route.RouteTree
 import thyme.request.Path.*
-import thyme.request.Get.*
+import thyme.request.rest.Get.*
 import thyme.request.ContextParam.*
 import thyme.response.ContentType
 import java.net.InetSocketAddress

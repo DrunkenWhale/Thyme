@@ -1,8 +1,5 @@
 package thyme.request
 
-import com.sun.net.httpserver.HttpExchange
-import thyme.response.Complete
-
 object Path {
 
   extension (self: Route) {
@@ -32,5 +29,5 @@ object Path {
     route.path.insert(0, path)
     route
   }
-  
+
 }

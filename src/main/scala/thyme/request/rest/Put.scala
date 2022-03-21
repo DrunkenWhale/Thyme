@@ -1,8 +1,7 @@
-package thyme.request
+package thyme.request.rest
 
-import com.sun.net.httpserver.HttpExchange
-import thyme.dsl.Method
-import thyme.extarctor.Context
+import thyme.request.context.Context
+import thyme.request.{HandleFactory, Route}
 import thyme.response.Complete
 
 object Put {

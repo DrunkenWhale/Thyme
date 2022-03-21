@@ -1,8 +1,7 @@
-package thyme.request
+package thyme.request.rest
 
-import com.sun.net.httpserver.HttpExchange
-import thyme.dsl.Method
-import thyme.extarctor.Context
+import thyme.request.context.Context
+import thyme.request.{HandleFactory, Route}
 import thyme.response.Complete
 
 object Get {
@@ -124,6 +123,6 @@ object Get {
   def get[A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W](x0: Context => A, x1: Context => B, x2: Context => C, x3: Context => D, x4: Context => E, x5: Context => F, x6: Context => G, x7: Context => H, x8: Context => I, x9: Context => J, x10: Context => K, x11: Context => L, x12: Context => M, x13: Context => N, x14: Context => O, x15: Context => P, x16: Context => Q, x17: Context => R, x18: Context => S, x19: Context => T, x20: Context => U, x21: Context => V, x22: Context => W)(lambda: (A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W) => Complete): Route = {
     Route(method = "GET", handle = HandleFactory.getHandle(x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15, x16, x17, x18, x19, x20, x21, x22)(lambda))
   }
-  
+
 
 }

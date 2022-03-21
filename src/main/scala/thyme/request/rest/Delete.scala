@@ -1,13 +1,12 @@
-package thyme.request
+package thyme.request.rest
 
-import com.sun.net.httpserver.HttpExchange
-import thyme.dsl.Method
-import thyme.extarctor.Context
+import thyme.request.context.Context
+import thyme.request.{HandleFactory, Route}
 import thyme.response.Complete
 
 object Delete {
 
-  def get(lambda: () => Complete): Route = {
+  def delete(lambda: () => Complete): Route = {
     Route(method = "DELETE", handle = HandleFactory.getHandle(lambda))
   }
 

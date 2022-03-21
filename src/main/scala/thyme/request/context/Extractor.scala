@@ -1,6 +1,7 @@
-package thyme.extarctor
+package thyme.request.context
 
 import com.sun.net.httpserver.HttpExchange
+import thyme.request.context.Context
 
 class Extractor {
 
@@ -25,7 +26,7 @@ object Extractor {
           .toMap
     }
 
-    val arg: Map[String, String] = {
+    val parameter: Map[String, String] = {
       String(httpExchange.getRequestURI.getRawQuery)
           .trim
           .split("&")
@@ -36,7 +37,7 @@ object Extractor {
           .toMap
     }
 
-    Context(header = header, form = form, parameter = arg)
+    Context(header = header, form = form, parameter = parameter, url = httpExchange.getRequestURI.toURL.toString)
 
   }
 

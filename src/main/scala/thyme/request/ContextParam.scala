@@ -1,6 +1,6 @@
 package thyme.request
 
-import thyme.extarctor.{Context, Extractor}
+import thyme.request.context.{Context, Extractor}
 
 import scala.reflect.{ClassTag, classTag}
 

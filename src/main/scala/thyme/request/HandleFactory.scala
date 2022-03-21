@@ -1,8 +1,8 @@
 package thyme.request
 
 import com.sun.net.httpserver.HttpExchange
-import thyme.extarctor.Context
-import thyme.extarctor.Extractor.extractor
+import thyme.request.context.Extractor.extractor
+import thyme.request.context.Context
 import thyme.response.Complete
 
 /**
