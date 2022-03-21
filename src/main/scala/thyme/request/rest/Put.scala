@@ -1,7 +1,7 @@
 package thyme.request.rest
 
 import thyme.request.context.Context
-import thyme.request.{HandleFactory, Route}
+import thyme.request.Route
 import thyme.response.Complete
 
 object Put {

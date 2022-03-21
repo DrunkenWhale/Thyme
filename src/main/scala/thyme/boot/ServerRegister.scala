@@ -4,11 +4,11 @@ import com.sun.net.httpserver.spi.HttpServerProvider
 import com.sun.net.httpserver.{HttpExchange, HttpServer}
 import thyme.request.Route
 import thyme.response.{Complete, Entity}
-import thyme.route.RouteTree
-import thyme.request.Path.*
-import thyme.request.rest.Get.*
-import thyme.request.ContextParam.*
+import thyme.request.path.Path.*
+import thyme.request.rest.ContextParam.*
+import thyme.request.route.RouteTree
 import thyme.response.ContentType
+
 import java.net.InetSocketAddress
 import java.nio.charset.StandardCharsets
 import java.util

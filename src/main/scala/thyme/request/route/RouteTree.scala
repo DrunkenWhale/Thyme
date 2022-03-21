@@ -1,4 +1,4 @@
-package thyme.route
+package thyme.request.route
 
 import com.sun.net.httpserver.HttpExchange
 import thyme.response.Complete
@@ -25,10 +25,10 @@ object RouteTree {
 
 
   @tailrec
-  private def buildRouteImpl(currentNode: RouteNode, routeNodePathList: List[String])(using handler: HttpExchange => Complete): Unit = {
+  private def buildRouteImpl(currentNode: RouteNode, routeNodePathList: List[String])(using handle: HttpExchange => Complete): Unit = {
 
     if (routeNodePathList.isEmpty) {
-      currentNode.handle = handler
+      currentNode.handle = handle
       return
     }
 

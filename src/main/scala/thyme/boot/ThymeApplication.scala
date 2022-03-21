@@ -4,8 +4,8 @@ import com.sun.net.httpserver.{HttpExchange, HttpServer}
 import thyme.boot.ServerRegister.httpServer
 import thyme.boot.ThymeApplication.{res, setResponseHeader}
 import thyme.request.Route
+import thyme.request.route.RouteTree
 import thyme.response.{Complete, ContentType}
-import thyme.route.RouteTree
 
 import java.net.InetSocketAddress
 import java.nio.charset.StandardCharsets

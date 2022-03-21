@@ -1,4 +1,6 @@
-package thyme.request
+package thyme.request.path
+
+import thyme.request.Route
 
 object Path {
 

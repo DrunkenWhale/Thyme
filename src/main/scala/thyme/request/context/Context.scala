@@ -6,3 +6,7 @@ final case class Context(
                             parameter: Map[String, String] = Map.empty,
                             url: String
                         )
+
+object Context{
+  
+}

@@ -1,6 +1,6 @@
-package thyme.request
+package thyme.request.rest
 
-import thyme.request.context.{Context, Extractor}
+import thyme.request.context.Context
 
 import scala.reflect.{ClassTag, classTag}
 
@@ -10,7 +10,7 @@ object ContextParam {
     (context: Context) =>
       context.parameter.getOrElse(name, "")
   }
-  
+
   def form(name: String): Context => String = {
     (context: Context) =>
       context.form.getOrElse(name, "")
@@ -56,7 +56,7 @@ object ContextParam {
         } else {
           throw new IllegalArgumentException("Unknown Support Param Type")
         }).asInstanceOf[T]
-        
+
       }
     }
 
