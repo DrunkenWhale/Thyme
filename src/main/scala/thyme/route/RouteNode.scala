@@ -1,9 +1,11 @@
 package thyme.route
 
 import com.sun.net.httpserver.HttpExchange
+import thyme.request.context.Context
 import thyme.response.Complete
 
 import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 
 
 /**

@@ -30,7 +30,7 @@ private class ThymeApplication {
       val path = httpExchange.getRequestURI.getPath
       val route = RouteTree.matchRoute(path)
       // path don't match any node in routeTree
-      if (route == null || (path == "/") && (route.handlers.isEmpty)) {
+      if (route == null || (path == "/") && route.handlers.isEmpty) {
         res(httpExchange, 404, "Not Found")
       } else {
         val handlerOpt = route.handlers.get(httpExchange.getRequestMethod)
