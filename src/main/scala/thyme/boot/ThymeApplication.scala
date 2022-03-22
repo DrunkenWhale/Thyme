@@ -15,8 +15,6 @@ private class ThymeApplication {
 
   private[thyme] val httpServer: HttpServer = HttpServer.create()
 
-  private[thyme] val routeMap: mutable.HashMap[String, String] = mutable.HashMap.empty
-
   def mount(routes: Seq[Node]): ThymeApplication = {
     routes.foreach(route => RouteTree.buildRoute(route.path.result(), route.method, route.handler))
     this
@@ -40,7 +38,6 @@ private class ThymeApplication {
           res(httpExchange, 405, "Method Not Allowed")
           return
         }
-
         //--------------lambda user define-------------------
         val complete: Complete = handlerOpt.get(httpExchange)
         //---------------------------------------------------
