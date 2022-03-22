@@ -18,9 +18,9 @@ object Test {
             Complete(200, Entity(contentType = ContentType.`application/json`, responseBody = "{name:114}"))
         }
       } ~ path("/apis") {
-        get (parameter("name")){ name=>
-            println(name)
-            Complete(200, Entity(contentType = ContentType.`application/json`, responseBody = s"{$name:114}"))
+        get(parameter("name").as[Boolean]) { name =>
+          println(name)
+          Complete(200, Entity(contentType = ContentType.`application/json`, responseBody = s"{$name:114}"))
         }
       }
 
