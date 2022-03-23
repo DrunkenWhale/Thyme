@@ -1,7 +1,6 @@
 package thyme.boot
 
 import com.sun.net.httpserver.{HttpExchange, HttpServer}
-import thyme.boot.ServerRegister.httpServer
 import thyme.boot.ThymeApplication.{res, setResponseHeader}
 import thyme.request.Node
 import thyme.response.{Complete, ContentType}
