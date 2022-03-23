@@ -4,6 +4,7 @@ import thyme.response.{Complete, ContentType, Entity}
 import thyme.dsl.Path.*
 import thyme.dsl.ContextParam.*
 import thyme.dsl.rest.Post.post
+import thyme.dsl.Middleware.middleware
 
 object Test {
   def main(args: Array[String]): Unit = {
@@ -18,9 +19,11 @@ object Test {
             Complete(200, Entity(contentType = ContentType.`application/json`, responseBody = "{name:114}"))
         }
       } ~ path("/apis") {
-        get(parameter("name").as[Boolean]) { name =>
-          println(name)
-          Complete(200, Entity(contentType = ContentType.`application/json`, responseBody = s"{$name:114}"))
+        middleware(context=>context.header.contains("Pass")) {
+          get(parameter("name").as[Boolean]) { name =>
+            println(name)
+            Complete(200, Entity(contentType = ContentType.`application/json`, responseBody = s"{$name:114}"))
+          }
         }
       }
 

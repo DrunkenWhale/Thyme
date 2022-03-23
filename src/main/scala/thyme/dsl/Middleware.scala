@@ -12,12 +12,12 @@ object Middleware {
     route.map { r =>
       Node(path = r.path, method = r.method, handler =
         (httpExchange: HttpExchange) =>
-          val context: Context = Extractor.extractor(httpExchange);
+          val context: Context = Extractor.extractor(httpExchange)
           var count = 0
           for (middleware <- middlewares
                if middleware(context)) {
             count += 1
-          };
+          }
           if (count == middlewares.length) {
             r.handler(httpExchange)
           } else {
