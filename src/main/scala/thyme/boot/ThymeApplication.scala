@@ -2,6 +2,7 @@ package thyme.boot
 
 import com.sun.net.httpserver.{HttpExchange, HttpServer}
 import thyme.boot.ThymeApplication.{res, setResponseHeader}
+import thyme.log.{BootLogger, RequestLogger}
 import thyme.request.Node
 import thyme.response.{Complete, ContentType}
 import thyme.route.RouteTree
@@ -15,16 +16,32 @@ private class ThymeApplication {
   private[thyme] val httpServer: HttpServer = HttpServer.create()
 
   def mount(routes: Seq[Node]): ThymeApplication = {
+
+    BootLogger.logger("init route tree")
+
     routes.foreach(route => RouteTree.buildRoute(route.path.result(), route.method, route.handler))
+
+    BootLogger.logger("finish route tree init")
+
     this
   }
 
   def mount(route: Node): ThymeApplication = {
+
+    BootLogger.logger("init route tree")
+
     RouteTree.buildRoute(route.path.result(), route.method, route.handler)
+
+
+    BootLogger.logger("finish route tree init")
+
     this
   }
 
   def run(port: Int = 8080, backlog: Int = 7): Unit = {
+
+    BootLogger.logger("start http server")
+
     this.httpServer.createContext("/", (httpExchange: HttpExchange) => {
       val path = httpExchange.getRequestURI.getPath
       val route = RouteTree.matchRoute(path)
@@ -37,6 +54,7 @@ private class ThymeApplication {
           res(httpExchange, 405, "Method Not Allowed")
           return
         }
+
         //--------------lambda user define-------------------
         val complete: Complete = handlerOpt.get(httpExchange)
         //---------------------------------------------------
@@ -53,7 +71,11 @@ private class ThymeApplication {
 object ThymeApplication {
 
   def create(): ThymeApplication = {
+
+    BootLogger.logger("init http server ")
+
     new ThymeApplication
+
   }
 
   private def res(httpExchange: HttpExchange, statusCode: Int, responseBody: String): Unit = {
@@ -61,6 +83,9 @@ object ThymeApplication {
     httpExchange.getResponseBody.write(responseBody.getBytes(StandardCharsets.UTF_8))
     httpExchange.getResponseBody.flush()
     httpExchange.getResponseBody.close()
+
+    RequestLogger.logRequest(httpExchange.getRequestMethod, httpExchange.getRequestURI.getPath, statusCode)
+
   }
 
   //side effect
