@@ -6,10 +6,11 @@ import thyme.log.{BootLogger, RequestLogger}
 import thyme.request.Node
 import thyme.response.{Complete, ContentType}
 import thyme.route.RouteTree
-
+import concurrent.ExecutionContext.Implicits.global
 import java.net.InetSocketAddress
 import java.nio.charset.StandardCharsets
 import scala.collection.mutable
+import scala.concurrent.Future
 
 private class ThymeApplication {
 
@@ -42,7 +43,7 @@ private class ThymeApplication {
 
     BootLogger.logger("start http server")
 
-    this.httpServer.createContext("/", (httpExchange: HttpExchange) => {
+    this.httpServer.createContext("/", (httpExchange: HttpExchange) => Future{
       val path = httpExchange.getRequestURI.getPath
       val route = RouteTree.matchRoute(path)
       // path don't match any node in routeTree
@@ -79,6 +80,7 @@ object ThymeApplication {
   }
 
   private def res(httpExchange: HttpExchange, statusCode: Int, responseBody: String): Unit = {
+    
     httpExchange.sendResponseHeaders(statusCode, responseBody.length)
     httpExchange.getResponseBody.write(responseBody.getBytes(StandardCharsets.UTF_8))
     httpExchange.getResponseBody.flush()
