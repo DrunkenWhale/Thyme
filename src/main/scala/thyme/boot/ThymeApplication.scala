@@ -43,14 +43,13 @@ private class ThymeApplication {
 
     BootLogger.logger("start http server")
 
-    this.httpServer.createContext("/", (httpExchange: HttpExchange) => Future{
+    this.httpServer.createContext("/", (httpExchange: HttpExchange) => Future {
       val path = httpExchange.getRequestURI.getPath
-      val route = RouteTree.matchRoute(path)
+      val (handlerOpt, paramValueList) = RouteTree.matchRoute(path, httpExchange.getRequestMethod)
       // path don't match any node in routeTree
-      if (route == null || (path == "/") && route.handlers.isEmpty) {
+      if (handlerOpt.isEmpty || (path == "/")) {
         res(httpExchange, 404, "Not Found")
       } else {
-        val handlerOpt = route.handlers.get(httpExchange.getRequestMethod)
         if (handlerOpt.isEmpty) {
           res(httpExchange, 405, "Method Not Allowed")
           return
@@ -80,7 +79,7 @@ object ThymeApplication {
   }
 
   private def res(httpExchange: HttpExchange, statusCode: Int, responseBody: String): Unit = {
-    
+
     httpExchange.sendResponseHeaders(statusCode, responseBody.length)
     httpExchange.getResponseBody.write(responseBody.getBytes(StandardCharsets.UTF_8))
     httpExchange.getResponseBody.flush()

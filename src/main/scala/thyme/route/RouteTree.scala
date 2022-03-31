@@ -2,15 +2,17 @@ package thyme.route
 
 import com.sun.net.httpserver.HttpExchange
 import thyme.response.Complete
+import thyme.route.node.{DynamicRouteNode, RouteNode, StaticRouteNode}
 
 import scala.annotation.tailrec
 import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 
 // be careful , don't overload the route register before
 
 object RouteTree {
 
-  private[thyme] val rootRouteNode = RouteNode("", mutable.HashMap.empty)
+  val rootRouteNode: RouteNode = StaticRouteNode("")
 
   def buildRoute(path: String, method: String, handler: HttpExchange => Complete): Unit = {
     if (!path.startsWith("/")) {
@@ -25,21 +27,18 @@ object RouteTree {
 
 
   @tailrec
-  private def buildRouteImpl(currentNode: RouteNode, routeNodePathList: List[String])(using method: String, handler: HttpExchange => Complete): Unit = {
+  private def buildRouteImpl(currentNode: RouteNode, routeNodePathList: List[String])
+                            (using method: String, handler: HttpExchange => Complete): Unit = {
 
+    // all elements are matched
+    // register handler with method
     if (routeNodePathList.isEmpty) {
       currentNode.handlers.put(method, handler)
       return
     }
 
-    val currentNodePath: String = {
-      val path = routeNodePathList.head
-      if (path.startsWith(":")) {
-        ":"
-      } else {
-        path
-      }
-    }
+    val currentNodePath: String = routeNodePathList.head
+
     val childrenNodeOpt = currentNode.children.get(currentNodePath)
 
     if (childrenNodeOpt.isDefined) {
@@ -49,45 +48,93 @@ object RouteTree {
 
     } else {
 
-      val childrenNode = RouteNode(currentNode.matchedPath + "/" + currentNodePath, mutable.HashMap.empty)
-      currentNode.children.put(currentNodePath, childrenNode)
+      val childrenNode: RouteNode = {
+
+        if (currentNodePath.startsWith(":")) {
+          // pre check will make sure this path slice's length > 1 and != ":"
+          val dynamicParamName: String = currentNodePath.substring(1)
+          DynamicRouteNode(paramName = dynamicParamName, matchedPath = currentNode.matchedPath + "/" + dynamicParamName)
+        } else {
+          StaticRouteNode(currentNode.matchedPath + "/" + currentNodePath)
+        }
+
+      }
+      currentNode.children.put(
+        if (currentNodePath.startsWith(":")) {
+          ":"
+        } else {
+          currentNodePath
+        },
+        childrenNode
+      )
+
       buildRouteImpl(childrenNode, routeNodePathList.tail)
 
     }
   }
 
-  def matchRoute(path: String): RouteNode = {
+  def matchRoute(path: String, method: String): (Option[HttpExchange => Complete], List[(String, String)]) = {
     if (!path.startsWith("/")) {
-      throw new IllegalArgumentException("path must start with '/'")
+      return (Option.empty, List())
     }
     if (path == "/") {
-      RouteTree.rootRouteNode
+      (Some(RouteTree.rootRouteNode.handlers(method)), List())
     }
     else {
       val routeNodePathList = path.split("/")
-      matchRouteImpl(RouteTree.rootRouteNode, routeNodePathList.toList.tail)
+      val dynamicParamListBuffer: ListBuffer[(String, String)] = ListBuffer.empty
+      val handlerOpt = matchRouteImpl(RouteTree.rootRouteNode, routeNodePathList.toList.tail)(using method, dynamicParamListBuffer)
+      if (handlerOpt.isEmpty) {
+        (Option.empty, List())
+      } else {
+        (handlerOpt, dynamicParamListBuffer.result())
+      }
     }
   }
 
   @tailrec
-  private def matchRouteImpl(currentNode: RouteNode, routeNodePathList: List[String]): RouteNode = {
-
+  private def matchRouteImpl(currentNode: RouteNode, routeNodePathList: List[String])
+                            (using method: String, paramListBuffer: ListBuffer[(String, String)]): Option[HttpExchange => Complete] = {
+    // match all path slice
     if (routeNodePathList.isEmpty) {
-      if (currentNode.handlers.nonEmpty) {
-        return currentNode
+
+      if (currentNode.handlers.contains(method)) {
+
+        return Some(currentNode.handlers(method))
+
       }
+
       else {
-        return null
+        // unregister node
+        return Option.empty
+
       }
+
     }
     val currentNodePath = routeNodePathList.head
-    if (currentNode.children.contains(currentNodePath)) {
+
+    val childrenNodeOpt = currentNode.children.get(currentNodePath)
+
+    if (childrenNodeOpt.isDefined) {
+
       matchRouteImpl(currentNode.children(routeNodePathList.head), routeNodePathList.tail)
+
     } else {
-      if (currentNode.children.contains(":")) {
-        matchRouteImpl(currentNode.children(":"), routeNodePathList.tail)
+
+      val currentNodeChildrenDynamicNodeOpt = currentNode.children.get(":")
+
+      if (currentNodeChildrenDynamicNodeOpt.isDefined) {
+
+        val currentNodeChildrenDynamicNode: DynamicRouteNode = currentNodeChildrenDynamicNodeOpt.get.asInstanceOf[DynamicRouteNode]
+
+        paramListBuffer.addOne((currentNodeChildrenDynamicNode.paramName, routeNodePathList.head))
+
+        matchRouteImpl(currentNodeChildrenDynamicNode, routeNodePathList.tail)
+
       } else {
-        null
+        // unregister node
+        Option.empty
+
       }
     }
   }
