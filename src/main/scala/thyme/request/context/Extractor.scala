@@ -8,7 +8,7 @@ class Extractor {
 }
 
 object Extractor {
-  def extractor(httpExchange: HttpExchange): Context = {
+  def extractor(httpExchange: HttpExchange, dynamicRouteParam: List[(String, String)] = List()): Context = {
     try {
       val header: Map[String, String] = {
         val headers = httpExchange.getRequestHeaders
@@ -70,7 +70,8 @@ object Extractor {
         method = httpExchange.getRequestMethod,
         header = header,
         form = form,
-        parameter = parameter
+        parameter = parameter,
+        route = dynamicRouteParam.toMap
       )
     } catch {
       case x: Exception => x.printStackTrace()

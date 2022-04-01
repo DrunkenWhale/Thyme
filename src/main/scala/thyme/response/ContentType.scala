@@ -1,6 +1,6 @@
 package thyme.response
 
-enum ContentType(val contentType: String) {
+enum ContentType(private val contentType: String) {
 
   override def toString: String = this.contentType
 

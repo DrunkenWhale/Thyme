@@ -5,7 +5,8 @@ final case class Context(
                             method: String,
                             header: Map[String, String] = Map.empty,
                             form: Map[String, String] = Map.empty,
-                            parameter: Map[String, String] = Map.empty
+                            parameter: Map[String, String] = Map.empty,
+                            route: Map[String, String] = Map.empty
                         )
 
 object Context {

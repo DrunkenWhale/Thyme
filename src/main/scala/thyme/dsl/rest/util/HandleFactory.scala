@@ -1,8 +1,6 @@
 package thyme.dsl.rest.util
 
-import com.sun.net.httpserver.HttpExchange
 import thyme.request.context.Context
-import thyme.request.context.Extractor.extractor
 import thyme.response.Complete
 
 /**
@@ -12,14 +10,14 @@ import thyme.response.Complete
 private[thyme] object HandleFactory {
 
   def getHandle
-  (lambda: () => Complete): HttpExchange => Complete = {
-    (httpExchange: HttpExchange) => lambda()
+  (lambda: () => Complete): Context => Complete = {
+    (context: Context) => lambda()
   }
 
   def getHandle[A]
   (x0: Context => A)
-  (lambda: A => Complete): HttpExchange => Complete = {
-    (httpExchange: HttpExchange) => lambda(x0(extractor(httpExchange)))
+  (lambda: A => Complete): Context => Complete = {
+    (context: Context) => lambda(x0(context))
 
   }
 
@@ -27,10 +25,10 @@ private[thyme] object HandleFactory {
   def getHandle[A, B]
   (x0: Context => A,
    x1: Context => B)
-  (lambda: (A, B) => Complete): HttpExchange => Complete = {
-    (httpExchange: HttpExchange) =>
-      lambda(x0(extractor(httpExchange)),
-        x1(extractor(httpExchange)))
+  (lambda: (A, B) => Complete): Context => Complete = {
+    (context: Context) =>
+      lambda(x0(context),
+        x1(context))
 
   }
 
@@ -39,11 +37,11 @@ private[thyme] object HandleFactory {
   (x0: Context => A,
    x1: Context => B,
    x2: Context => C)
-  (lambda: (A, B, C) => Complete): HttpExchange => Complete = {
-    (httpExchange: HttpExchange) =>
-      lambda(x0(extractor(httpExchange)),
-        x1(extractor(httpExchange)),
-        x2(extractor(httpExchange)))
+  (lambda: (A, B, C) => Complete): Context => Complete = {
+    (context: Context) =>
+      lambda(x0(context),
+        x1(context),
+        x2(context))
 
   }
 
@@ -53,12 +51,12 @@ private[thyme] object HandleFactory {
    x1: Context => B,
    x2: Context => C,
    x3: Context => D)
-  (lambda: (A, B, C, D) => Complete): HttpExchange => Complete = {
-    (httpExchange: HttpExchange) =>
-      lambda(x0(extractor(httpExchange)),
-        x1(extractor(httpExchange)),
-        x2(extractor(httpExchange)),
-        x3(extractor(httpExchange)))
+  (lambda: (A, B, C, D) => Complete): Context => Complete = {
+    (context: Context) =>
+      lambda(x0(context),
+        x1(context),
+        x2(context),
+        x3(context))
 
   }
 
@@ -69,13 +67,13 @@ private[thyme] object HandleFactory {
    x2: Context => C,
    x3: Context => D,
    x4: Context => E)
-  (lambda: (A, B, C, D, E) => Complete): HttpExchange => Complete = {
-    (httpExchange: HttpExchange) =>
-      lambda(x0(extractor(httpExchange)),
-        x1(extractor(httpExchange)),
-        x2(extractor(httpExchange)),
-        x3(extractor(httpExchange)),
-        x4(extractor(httpExchange)))
+  (lambda: (A, B, C, D, E) => Complete): Context => Complete = {
+    (context: Context) =>
+      lambda(x0(context),
+        x1(context),
+        x2(context),
+        x3(context),
+        x4(context))
 
   }
 
@@ -87,14 +85,14 @@ private[thyme] object HandleFactory {
    x3: Context => D,
    x4: Context => E,
    x5: Context => F)
-  (lambda: (A, B, C, D, E, F) => Complete): HttpExchange => Complete = {
-    (httpExchange: HttpExchange) =>
-      lambda(x0(extractor(httpExchange)),
-        x1(extractor(httpExchange)),
-        x2(extractor(httpExchange)),
-        x3(extractor(httpExchange)),
-        x4(extractor(httpExchange)),
-        x5(extractor(httpExchange)))
+  (lambda: (A, B, C, D, E, F) => Complete): Context => Complete = {
+    (context: Context) =>
+      lambda(x0(context),
+        x1(context),
+        x2(context),
+        x3(context),
+        x4(context),
+        x5(context))
 
   }
 
@@ -107,15 +105,15 @@ private[thyme] object HandleFactory {
    x4: Context => E,
    x5: Context => F,
    x6: Context => G)
-  (lambda: (A, B, C, D, E, F, G) => Complete): HttpExchange => Complete = {
-    (httpExchange: HttpExchange) =>
-      lambda(x0(extractor(httpExchange)),
-        x1(extractor(httpExchange)),
-        x2(extractor(httpExchange)),
-        x3(extractor(httpExchange)),
-        x4(extractor(httpExchange)),
-        x5(extractor(httpExchange)),
-        x6(extractor(httpExchange)))
+  (lambda: (A, B, C, D, E, F, G) => Complete): Context => Complete = {
+    (context: Context) =>
+      lambda(x0(context),
+        x1(context),
+        x2(context),
+        x3(context),
+        x4(context),
+        x5(context),
+        x6(context))
 
   }
 
@@ -129,16 +127,16 @@ private[thyme] object HandleFactory {
    x5: Context => F,
    x6: Context => G,
    x7: Context => H)
-  (lambda: (A, B, C, D, E, F, G, H) => Complete): HttpExchange => Complete = {
-    (httpExchange: HttpExchange) =>
-      lambda(x0(extractor(httpExchange)),
-        x1(extractor(httpExchange)),
-        x2(extractor(httpExchange)),
-        x3(extractor(httpExchange)),
-        x4(extractor(httpExchange)),
-        x5(extractor(httpExchange)),
-        x6(extractor(httpExchange)),
-        x7(extractor(httpExchange)))
+  (lambda: (A, B, C, D, E, F, G, H) => Complete): Context => Complete = {
+    (context: Context) =>
+      lambda(x0(context),
+        x1(context),
+        x2(context),
+        x3(context),
+        x4(context),
+        x5(context),
+        x6(context),
+        x7(context))
 
   }
 
@@ -153,17 +151,17 @@ private[thyme] object HandleFactory {
    x6: Context => G,
    x7: Context => H,
    x8: Context => I)
-  (lambda: (A, B, C, D, E, F, G, H, I) => Complete): HttpExchange => Complete = {
-    (httpExchange: HttpExchange) =>
-      lambda(x0(extractor(httpExchange)),
-        x1(extractor(httpExchange)),
-        x2(extractor(httpExchange)),
-        x3(extractor(httpExchange)),
-        x4(extractor(httpExchange)),
-        x5(extractor(httpExchange)),
-        x6(extractor(httpExchange)),
-        x7(extractor(httpExchange)),
-        x8(extractor(httpExchange)))
+  (lambda: (A, B, C, D, E, F, G, H, I) => Complete): Context => Complete = {
+    (context: Context) =>
+      lambda(x0(context),
+        x1(context),
+        x2(context),
+        x3(context),
+        x4(context),
+        x5(context),
+        x6(context),
+        x7(context),
+        x8(context))
 
   }
 
@@ -179,18 +177,18 @@ private[thyme] object HandleFactory {
    x7: Context => H,
    x8: Context => I,
    x9: Context => J)
-  (lambda: (A, B, C, D, E, F, G, H, I, J) => Complete): HttpExchange => Complete = {
-    (httpExchange: HttpExchange) =>
-      lambda(x0(extractor(httpExchange)),
-        x1(extractor(httpExchange)),
-        x2(extractor(httpExchange)),
-        x3(extractor(httpExchange)),
-        x4(extractor(httpExchange)),
-        x5(extractor(httpExchange)),
-        x6(extractor(httpExchange)),
-        x7(extractor(httpExchange)),
-        x8(extractor(httpExchange)),
-        x9(extractor(httpExchange)))
+  (lambda: (A, B, C, D, E, F, G, H, I, J) => Complete): Context => Complete = {
+    (context: Context) =>
+      lambda(x0(context),
+        x1(context),
+        x2(context),
+        x3(context),
+        x4(context),
+        x5(context),
+        x6(context),
+        x7(context),
+        x8(context),
+        x9(context))
 
   }
 
@@ -207,19 +205,19 @@ private[thyme] object HandleFactory {
    x8: Context => I,
    x9: Context => J,
    x10: Context => K)
-  (lambda: (A, B, C, D, E, F, G, H, I, J, K) => Complete): HttpExchange => Complete = {
-    (httpExchange: HttpExchange) =>
-      lambda(x0(extractor(httpExchange)),
-        x1(extractor(httpExchange)),
-        x2(extractor(httpExchange)),
-        x3(extractor(httpExchange)),
-        x4(extractor(httpExchange)),
-        x5(extractor(httpExchange)),
-        x6(extractor(httpExchange)),
-        x7(extractor(httpExchange)),
-        x8(extractor(httpExchange)),
-        x9(extractor(httpExchange)),
-        x10(extractor(httpExchange)))
+  (lambda: (A, B, C, D, E, F, G, H, I, J, K) => Complete): Context => Complete = {
+    (context: Context) =>
+      lambda(x0(context),
+        x1(context),
+        x2(context),
+        x3(context),
+        x4(context),
+        x5(context),
+        x6(context),
+        x7(context),
+        x8(context),
+        x9(context),
+        x10(context))
 
   }
 
@@ -237,20 +235,20 @@ private[thyme] object HandleFactory {
    x9: Context => J,
    x10: Context => K,
    x11: Context => L)
-  (lambda: (A, B, C, D, E, F, G, H, I, J, K, L) => Complete): HttpExchange => Complete = {
-    (httpExchange: HttpExchange) =>
-      lambda(x0(extractor(httpExchange)),
-        x1(extractor(httpExchange)),
-        x2(extractor(httpExchange)),
-        x3(extractor(httpExchange)),
-        x4(extractor(httpExchange)),
-        x5(extractor(httpExchange)),
-        x6(extractor(httpExchange)),
-        x7(extractor(httpExchange)),
-        x8(extractor(httpExchange)),
-        x9(extractor(httpExchange)),
-        x10(extractor(httpExchange)),
-        x11(extractor(httpExchange)))
+  (lambda: (A, B, C, D, E, F, G, H, I, J, K, L) => Complete): Context => Complete = {
+    (context: Context) =>
+      lambda(x0(context),
+        x1(context),
+        x2(context),
+        x3(context),
+        x4(context),
+        x5(context),
+        x6(context),
+        x7(context),
+        x8(context),
+        x9(context),
+        x10(context),
+        x11(context))
 
   }
 
@@ -269,21 +267,21 @@ private[thyme] object HandleFactory {
    x10: Context => K,
    x11: Context => L,
    x12: Context => M)
-  (lambda: (A, B, C, D, E, F, G, H, I, J, K, L, M) => Complete): HttpExchange => Complete = {
-    (httpExchange: HttpExchange) =>
-      lambda(x0(extractor(httpExchange)),
-        x1(extractor(httpExchange)),
-        x2(extractor(httpExchange)),
-        x3(extractor(httpExchange)),
-        x4(extractor(httpExchange)),
-        x5(extractor(httpExchange)),
-        x6(extractor(httpExchange)),
-        x7(extractor(httpExchange)),
-        x8(extractor(httpExchange)),
-        x9(extractor(httpExchange)),
-        x10(extractor(httpExchange)),
-        x11(extractor(httpExchange)),
-        x12(extractor(httpExchange)))
+  (lambda: (A, B, C, D, E, F, G, H, I, J, K, L, M) => Complete): Context => Complete = {
+    (context: Context) =>
+      lambda(x0(context),
+        x1(context),
+        x2(context),
+        x3(context),
+        x4(context),
+        x5(context),
+        x6(context),
+        x7(context),
+        x8(context),
+        x9(context),
+        x10(context),
+        x11(context),
+        x12(context))
 
   }
 
@@ -303,22 +301,22 @@ private[thyme] object HandleFactory {
    x11: Context => L,
    x12: Context => M,
    x13: Context => N)
-  (lambda: (A, B, C, D, E, F, G, H, I, J, K, L, M, N) => Complete): HttpExchange => Complete = {
-    (httpExchange: HttpExchange) =>
-      lambda(x0(extractor(httpExchange)),
-        x1(extractor(httpExchange)),
-        x2(extractor(httpExchange)),
-        x3(extractor(httpExchange)),
-        x4(extractor(httpExchange)),
-        x5(extractor(httpExchange)),
-        x6(extractor(httpExchange)),
-        x7(extractor(httpExchange)),
-        x8(extractor(httpExchange)),
-        x9(extractor(httpExchange)),
-        x10(extractor(httpExchange)),
-        x11(extractor(httpExchange)),
-        x12(extractor(httpExchange)),
-        x13(extractor(httpExchange)))
+  (lambda: (A, B, C, D, E, F, G, H, I, J, K, L, M, N) => Complete): Context => Complete = {
+    (context: Context) =>
+      lambda(x0(context),
+        x1(context),
+        x2(context),
+        x3(context),
+        x4(context),
+        x5(context),
+        x6(context),
+        x7(context),
+        x8(context),
+        x9(context),
+        x10(context),
+        x11(context),
+        x12(context),
+        x13(context))
 
   }
 
@@ -339,23 +337,23 @@ private[thyme] object HandleFactory {
    x12: Context => M,
    x13: Context => N,
    x14: Context => O)
-  (lambda: (A, B, C, D, E, F, G, H, I, J, K, L, M, N, O) => Complete): HttpExchange => Complete = {
-    (httpExchange: HttpExchange) =>
-      lambda(x0(extractor(httpExchange)),
-        x1(extractor(httpExchange)),
-        x2(extractor(httpExchange)),
-        x3(extractor(httpExchange)),
-        x4(extractor(httpExchange)),
-        x5(extractor(httpExchange)),
-        x6(extractor(httpExchange)),
-        x7(extractor(httpExchange)),
-        x8(extractor(httpExchange)),
-        x9(extractor(httpExchange)),
-        x10(extractor(httpExchange)),
-        x11(extractor(httpExchange)),
-        x12(extractor(httpExchange)),
-        x13(extractor(httpExchange)),
-        x14(extractor(httpExchange)))
+  (lambda: (A, B, C, D, E, F, G, H, I, J, K, L, M, N, O) => Complete): Context => Complete = {
+    (context: Context) =>
+      lambda(x0(context),
+        x1(context),
+        x2(context),
+        x3(context),
+        x4(context),
+        x5(context),
+        x6(context),
+        x7(context),
+        x8(context),
+        x9(context),
+        x10(context),
+        x11(context),
+        x12(context),
+        x13(context),
+        x14(context))
 
   }
 
@@ -377,24 +375,24 @@ private[thyme] object HandleFactory {
    x13: Context => N,
    x14: Context => O,
    x15: Context => P)
-  (lambda: (A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P) => Complete): HttpExchange => Complete = {
-    (httpExchange: HttpExchange) =>
-      lambda(x0(extractor(httpExchange)),
-        x1(extractor(httpExchange)),
-        x2(extractor(httpExchange)),
-        x3(extractor(httpExchange)),
-        x4(extractor(httpExchange)),
-        x5(extractor(httpExchange)),
-        x6(extractor(httpExchange)),
-        x7(extractor(httpExchange)),
-        x8(extractor(httpExchange)),
-        x9(extractor(httpExchange)),
-        x10(extractor(httpExchange)),
-        x11(extractor(httpExchange)),
-        x12(extractor(httpExchange)),
-        x13(extractor(httpExchange)),
-        x14(extractor(httpExchange)),
-        x15(extractor(httpExchange)))
+  (lambda: (A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P) => Complete): Context => Complete = {
+    (context: Context) =>
+      lambda(x0(context),
+        x1(context),
+        x2(context),
+        x3(context),
+        x4(context),
+        x5(context),
+        x6(context),
+        x7(context),
+        x8(context),
+        x9(context),
+        x10(context),
+        x11(context),
+        x12(context),
+        x13(context),
+        x14(context),
+        x15(context))
 
   }
 
@@ -417,25 +415,25 @@ private[thyme] object HandleFactory {
    x14: Context => O,
    x15: Context => P,
    x16: Context => Q)
-  (lambda: (A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q) => Complete): HttpExchange => Complete = {
-    (httpExchange: HttpExchange) =>
-      lambda(x0(extractor(httpExchange)),
-        x1(extractor(httpExchange)),
-        x2(extractor(httpExchange)),
-        x3(extractor(httpExchange)),
-        x4(extractor(httpExchange)),
-        x5(extractor(httpExchange)),
-        x6(extractor(httpExchange)),
-        x7(extractor(httpExchange)),
-        x8(extractor(httpExchange)),
-        x9(extractor(httpExchange)),
-        x10(extractor(httpExchange)),
-        x11(extractor(httpExchange)),
-        x12(extractor(httpExchange)),
-        x13(extractor(httpExchange)),
-        x14(extractor(httpExchange)),
-        x15(extractor(httpExchange)),
-        x16(extractor(httpExchange)))
+  (lambda: (A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q) => Complete): Context => Complete = {
+    (context: Context) =>
+      lambda(x0(context),
+        x1(context),
+        x2(context),
+        x3(context),
+        x4(context),
+        x5(context),
+        x6(context),
+        x7(context),
+        x8(context),
+        x9(context),
+        x10(context),
+        x11(context),
+        x12(context),
+        x13(context),
+        x14(context),
+        x15(context),
+        x16(context))
 
   }
 
@@ -459,26 +457,26 @@ private[thyme] object HandleFactory {
    x15: Context => P,
    x16: Context => Q,
    x17: Context => R)
-  (lambda: (A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R) => Complete): HttpExchange => Complete = {
-    (httpExchange: HttpExchange) =>
-      lambda(x0(extractor(httpExchange)),
-        x1(extractor(httpExchange)),
-        x2(extractor(httpExchange)),
-        x3(extractor(httpExchange)),
-        x4(extractor(httpExchange)),
-        x5(extractor(httpExchange)),
-        x6(extractor(httpExchange)),
-        x7(extractor(httpExchange)),
-        x8(extractor(httpExchange)),
-        x9(extractor(httpExchange)),
-        x10(extractor(httpExchange)),
-        x11(extractor(httpExchange)),
-        x12(extractor(httpExchange)),
-        x13(extractor(httpExchange)),
-        x14(extractor(httpExchange)),
-        x15(extractor(httpExchange)),
-        x16(extractor(httpExchange)),
-        x17(extractor(httpExchange)))
+  (lambda: (A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R) => Complete): Context => Complete = {
+    (context: Context) =>
+      lambda(x0(context),
+        x1(context),
+        x2(context),
+        x3(context),
+        x4(context),
+        x5(context),
+        x6(context),
+        x7(context),
+        x8(context),
+        x9(context),
+        x10(context),
+        x11(context),
+        x12(context),
+        x13(context),
+        x14(context),
+        x15(context),
+        x16(context),
+        x17(context))
 
   }
 
@@ -503,27 +501,27 @@ private[thyme] object HandleFactory {
    x16: Context => Q,
    x17: Context => R,
    x18: Context => S)
-  (lambda: (A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S) => Complete): HttpExchange => Complete = {
-    (httpExchange: HttpExchange) =>
-      lambda(x0(extractor(httpExchange)),
-        x1(extractor(httpExchange)),
-        x2(extractor(httpExchange)),
-        x3(extractor(httpExchange)),
-        x4(extractor(httpExchange)),
-        x5(extractor(httpExchange)),
-        x6(extractor(httpExchange)),
-        x7(extractor(httpExchange)),
-        x8(extractor(httpExchange)),
-        x9(extractor(httpExchange)),
-        x10(extractor(httpExchange)),
-        x11(extractor(httpExchange)),
-        x12(extractor(httpExchange)),
-        x13(extractor(httpExchange)),
-        x14(extractor(httpExchange)),
-        x15(extractor(httpExchange)),
-        x16(extractor(httpExchange)),
-        x17(extractor(httpExchange)),
-        x18(extractor(httpExchange)))
+  (lambda: (A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S) => Complete): Context => Complete = {
+    (context: Context) =>
+      lambda(x0(context),
+        x1(context),
+        x2(context),
+        x3(context),
+        x4(context),
+        x5(context),
+        x6(context),
+        x7(context),
+        x8(context),
+        x9(context),
+        x10(context),
+        x11(context),
+        x12(context),
+        x13(context),
+        x14(context),
+        x15(context),
+        x16(context),
+        x17(context),
+        x18(context))
 
   }
 
@@ -549,28 +547,28 @@ private[thyme] object HandleFactory {
    x17: Context => R,
    x18: Context => S,
    x19: Context => T)
-  (lambda: (A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T) => Complete): HttpExchange => Complete = {
-    (httpExchange: HttpExchange) =>
-      lambda(x0(extractor(httpExchange)),
-        x1(extractor(httpExchange)),
-        x2(extractor(httpExchange)),
-        x3(extractor(httpExchange)),
-        x4(extractor(httpExchange)),
-        x5(extractor(httpExchange)),
-        x6(extractor(httpExchange)),
-        x7(extractor(httpExchange)),
-        x8(extractor(httpExchange)),
-        x9(extractor(httpExchange)),
-        x10(extractor(httpExchange)),
-        x11(extractor(httpExchange)),
-        x12(extractor(httpExchange)),
-        x13(extractor(httpExchange)),
-        x14(extractor(httpExchange)),
-        x15(extractor(httpExchange)),
-        x16(extractor(httpExchange)),
-        x17(extractor(httpExchange)),
-        x18(extractor(httpExchange)),
-        x19(extractor(httpExchange)))
+  (lambda: (A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T) => Complete): Context => Complete = {
+    (context: Context) =>
+      lambda(x0(context),
+        x1(context),
+        x2(context),
+        x3(context),
+        x4(context),
+        x5(context),
+        x6(context),
+        x7(context),
+        x8(context),
+        x9(context),
+        x10(context),
+        x11(context),
+        x12(context),
+        x13(context),
+        x14(context),
+        x15(context),
+        x16(context),
+        x17(context),
+        x18(context),
+        x19(context))
 
   }
 
@@ -597,29 +595,29 @@ private[thyme] object HandleFactory {
    x18: Context => S,
    x19: Context => T,
    x20: Context => U)
-  (lambda: (A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U) => Complete): HttpExchange => Complete = {
-    (httpExchange: HttpExchange) =>
-      lambda(x0(extractor(httpExchange)),
-        x1(extractor(httpExchange)),
-        x2(extractor(httpExchange)),
-        x3(extractor(httpExchange)),
-        x4(extractor(httpExchange)),
-        x5(extractor(httpExchange)),
-        x6(extractor(httpExchange)),
-        x7(extractor(httpExchange)),
-        x8(extractor(httpExchange)),
-        x9(extractor(httpExchange)),
-        x10(extractor(httpExchange)),
-        x11(extractor(httpExchange)),
-        x12(extractor(httpExchange)),
-        x13(extractor(httpExchange)),
-        x14(extractor(httpExchange)),
-        x15(extractor(httpExchange)),
-        x16(extractor(httpExchange)),
-        x17(extractor(httpExchange)),
-        x18(extractor(httpExchange)),
-        x19(extractor(httpExchange)),
-        x20(extractor(httpExchange)))
+  (lambda: (A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U) => Complete): Context => Complete = {
+    (context: Context) =>
+      lambda(x0(context),
+        x1(context),
+        x2(context),
+        x3(context),
+        x4(context),
+        x5(context),
+        x6(context),
+        x7(context),
+        x8(context),
+        x9(context),
+        x10(context),
+        x11(context),
+        x12(context),
+        x13(context),
+        x14(context),
+        x15(context),
+        x16(context),
+        x17(context),
+        x18(context),
+        x19(context),
+        x20(context))
 
   }
 
@@ -647,30 +645,30 @@ private[thyme] object HandleFactory {
    x19: Context => T,
    x20: Context => U,
    x21: Context => V)
-  (lambda: (A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V) => Complete): HttpExchange => Complete = {
-    (httpExchange: HttpExchange) =>
-      lambda(x0(extractor(httpExchange)),
-        x1(extractor(httpExchange)),
-        x2(extractor(httpExchange)),
-        x3(extractor(httpExchange)),
-        x4(extractor(httpExchange)),
-        x5(extractor(httpExchange)),
-        x6(extractor(httpExchange)),
-        x7(extractor(httpExchange)),
-        x8(extractor(httpExchange)),
-        x9(extractor(httpExchange)),
-        x10(extractor(httpExchange)),
-        x11(extractor(httpExchange)),
-        x12(extractor(httpExchange)),
-        x13(extractor(httpExchange)),
-        x14(extractor(httpExchange)),
-        x15(extractor(httpExchange)),
-        x16(extractor(httpExchange)),
-        x17(extractor(httpExchange)),
-        x18(extractor(httpExchange)),
-        x19(extractor(httpExchange)),
-        x20(extractor(httpExchange)),
-        x21(extractor(httpExchange)))
+  (lambda: (A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V) => Complete): Context => Complete = {
+    (context: Context) =>
+      lambda(x0(context),
+        x1(context),
+        x2(context),
+        x3(context),
+        x4(context),
+        x5(context),
+        x6(context),
+        x7(context),
+        x8(context),
+        x9(context),
+        x10(context),
+        x11(context),
+        x12(context),
+        x13(context),
+        x14(context),
+        x15(context),
+        x16(context),
+        x17(context),
+        x18(context),
+        x19(context),
+        x20(context),
+        x21(context))
 
   }
 
@@ -699,31 +697,31 @@ private[thyme] object HandleFactory {
    x20: Context => U,
    x21: Context => V,
    x22: Context => W)
-  (lambda: (A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W) => Complete): HttpExchange => Complete = {
-    (httpExchange: HttpExchange) =>
-      lambda(x0(extractor(httpExchange)),
-        x1(extractor(httpExchange)),
-        x2(extractor(httpExchange)),
-        x3(extractor(httpExchange)),
-        x4(extractor(httpExchange)),
-        x5(extractor(httpExchange)),
-        x6(extractor(httpExchange)),
-        x7(extractor(httpExchange)),
-        x8(extractor(httpExchange)),
-        x9(extractor(httpExchange)),
-        x10(extractor(httpExchange)),
-        x11(extractor(httpExchange)),
-        x12(extractor(httpExchange)),
-        x13(extractor(httpExchange)),
-        x14(extractor(httpExchange)),
-        x15(extractor(httpExchange)),
-        x16(extractor(httpExchange)),
-        x17(extractor(httpExchange)),
-        x18(extractor(httpExchange)),
-        x19(extractor(httpExchange)),
-        x20(extractor(httpExchange)),
-        x21(extractor(httpExchange)),
-        x22(extractor(httpExchange)))
+  (lambda: (A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W) => Complete): Context => Complete = {
+    (context: Context) =>
+      lambda(x0(context),
+        x1(context),
+        x2(context),
+        x3(context),
+        x4(context),
+        x5(context),
+        x6(context),
+        x7(context),
+        x8(context),
+        x9(context),
+        x10(context),
+        x11(context),
+        x12(context),
+        x13(context),
+        x14(context),
+        x15(context),
+        x16(context),
+        x17(context),
+        x18(context),
+        x19(context),
+        x20(context),
+        x21(context),
+        x22(context))
   }
 
 }

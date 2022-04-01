@@ -8,18 +8,18 @@ import thyme.dsl.Middleware.middleware
 
 object Test {
   def main(args: Array[String]): Unit = {
-    val route =
+    val router =
       path("/api") {
         get { () =>
           Complete(200, Entity(contentType = ContentType.`application/json`, responseBody = "{name:1}"))
         }
-      } ~ path("/") {
-        post {
-          () =>
-            Complete(200, Entity(contentType = ContentType.`application/json`, responseBody = "{name:114}"))
+      } ~ path("/:name") {
+        post(route("name")) {
+          name =>
+            Complete(200, Entity(contentType = ContentType.`application/json`, responseBody = s"{$name:114}"))
         }
       } ~ path("/apis") {
-        middleware(context=>context.header.contains("Pass")) {
+        middleware(context => context.header.contains("Pass")) {
           get(parameter("name").as[Boolean]) { name =>
             println(name)
             Complete(200, Entity(contentType = ContentType.`application/json`, responseBody = s"{$name:114}"))
@@ -29,7 +29,7 @@ object Test {
 
     ThymeApplication
         .create()
-        .mount(route)
+        .mount(router)
         .run(9090)
   }
 }

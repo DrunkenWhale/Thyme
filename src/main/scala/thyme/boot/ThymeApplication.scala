@@ -4,8 +4,10 @@ import com.sun.net.httpserver.{HttpExchange, HttpServer}
 import thyme.boot.ThymeApplication.{res, setResponseHeader}
 import thyme.log.{BootLogger, RequestLogger}
 import thyme.request.Node
+import thyme.request.context.Extractor
 import thyme.response.{Complete, ContentType}
 import thyme.route.RouteTree
+
 import concurrent.ExecutionContext.Implicits.global
 import java.net.InetSocketAddress
 import java.nio.charset.StandardCharsets
@@ -33,7 +35,6 @@ private class ThymeApplication {
 
     RouteTree.buildRoute(route.path.result(), route.method, route.handler)
 
-
     BootLogger.logger("finish route tree init")
 
     this
@@ -45,25 +46,28 @@ private class ThymeApplication {
 
     this.httpServer.createContext("/", (httpExchange: HttpExchange) => Future {
       val path = httpExchange.getRequestURI.getPath
-      val (handlerOpt, paramValueList) = RouteTree.matchRoute(path, httpExchange.getRequestMethod)
+      val (handlerOpt, dynamicRouteParamList, isMethodNotAllow) = RouteTree.matchRoute(path, httpExchange.getRequestMethod)
       // path don't match any node in routeTree
-      if (handlerOpt.isEmpty || (path == "/")) {
-        res(httpExchange, 404, "Not Found")
-      } else {
-        if (handlerOpt.isEmpty) {
+      if (handlerOpt.isEmpty) {
+        if (isMethodNotAllow) {
           res(httpExchange, 405, "Method Not Allowed")
-          return
+        } else {
+          res(httpExchange, 404, "Not Found")
         }
+      } else {
 
         //--------------lambda user define-------------------
-        val complete: Complete = handlerOpt.get(httpExchange)
+        val complete: Complete = handlerOpt.get(Extractor.extractor(httpExchange,dynamicRouteParamList))
         //---------------------------------------------------
 
-        setResponseHeader(httpExchange, ("Content-Type", complete.entity.contentType.contentType))
+        setResponseHeader(httpExchange, ("Content-Type", complete.entity.contentType.toString))
         res(httpExchange, complete.statusCode, complete.entity.responseBody)
       }
     })
     this.httpServer.bind(new InetSocketAddress(port), backlog)
+
+    BootLogger.logger(s"listen on port: $port")
+
     this.httpServer.start()
   }
 }

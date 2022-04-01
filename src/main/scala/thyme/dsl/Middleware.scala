@@ -11,15 +11,14 @@ object Middleware {
   def middleware(middlewares: (Context => Boolean)*)(route: Node*): Seq[Node] = {
     route.map { r =>
       Node(path = r.path, method = r.method, handler =
-        (httpExchange: HttpExchange) =>
-          val context: Context = Extractor.extractor(httpExchange)
+        (context: Context) =>
           var count = 0
           for (middleware <- middlewares
                if middleware(context)) {
             count += 1
           }
           if (count == middlewares.length) {
-            r.handler(httpExchange)
+            r.handler(context)
           } else {
             // refactor
             Complete(404, Entity(ContentType.`text/plain`, "Not Found"))

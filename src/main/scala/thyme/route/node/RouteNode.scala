@@ -1,6 +1,6 @@
 package thyme.route.node
 
-import com.sun.net.httpserver.HttpExchange
+import thyme.request.context.Context
 import thyme.response.Complete
 import thyme.route.node.RouteNode
 
@@ -21,6 +21,6 @@ abstract trait RouteNode {
 
   val children: mutable.HashMap[String, RouteNode]
 
-  val handlers: mutable.HashMap[String, HttpExchange => Complete]
+  val handlers: mutable.HashMap[String, Context => Complete]
 
 }
