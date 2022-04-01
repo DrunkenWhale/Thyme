@@ -7,6 +7,7 @@ import thyme.route.node.{DynamicRouteNode, RouteNode, StaticRouteNode}
 import scala.annotation.tailrec
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
+import scala.util.{Failure, Success, Try}
 
 // be careful , don't overload the route register before
 
@@ -14,15 +15,16 @@ object RouteTree {
 
   val rootRouteNode: RouteNode = StaticRouteNode("")
 
-  def buildRoute(path: String, method: String, handler: HttpExchange => Complete): Unit = {
+  def buildRoute(path: String, method: String, handler: HttpExchange => Complete): Try[_] = {
     if (!path.startsWith("/")) {
-      throw new IllegalArgumentException("path must start with '/'")
+      return Failure(new IllegalArgumentException("path must start with '/'"))
     }
     if (path == "/") {
       RouteTree.rootRouteNode.handlers.put(method, handler)
     } else {
       buildRouteImpl(RouteTree.rootRouteNode, path.split("/").toList.tail)(using method, handler)
     }
+    Success(null)
   }
 
 
