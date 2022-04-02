@@ -2,7 +2,7 @@ package thyme.dsl
 
 import com.sun.net.httpserver.HttpExchange
 import thyme.request.Node
-import thyme.response.ContentType
+import thyme.response.ContentTypes
 import thyme.request.context.{Context, Extractor}
 import thyme.response.{Complete, Entity}
 
@@ -21,7 +21,7 @@ object Middleware {
             r.handler(context)
           } else {
             // refactor
-            Complete(404, Entity(ContentType.`text/plain`, "Not Found"))
+            Complete(404, Entity(ContentTypes.`text/plain`, "Not Found"))
           }
       )
     }

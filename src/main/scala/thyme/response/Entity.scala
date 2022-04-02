@@ -1,3 +1,3 @@
 package thyme.response
 
-case class Entity(contentType: ContentType, responseBody: String)
+case class Entity(contentType: ContentTypes, responseBody: String)

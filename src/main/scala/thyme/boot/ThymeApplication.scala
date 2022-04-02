@@ -5,7 +5,7 @@ import thyme.boot.ThymeApplication.{res, setResponseHeader}
 import thyme.log.{BootLogger, RequestLogger}
 import thyme.request.Node
 import thyme.request.context.Extractor
-import thyme.response.{Complete, ContentType}
+import thyme.response.{Complete, ContentTypes}
 import thyme.route.RouteTree
 
 import concurrent.ExecutionContext.Implicits.global
