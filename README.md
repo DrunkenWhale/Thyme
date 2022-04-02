@@ -51,7 +51,8 @@ ThymeApplication.create().mount(
 
 ```
 
-this code will get `isOK` from http request form, and refuse it if isOK is not a Boolean value
+this code will get `isOK` from http request form, and `is` will be thought as Option[Boolean]
+if `isOK`'s value is not Boolean type, Option will be empty
 
 ## An Easy Web Application
 
