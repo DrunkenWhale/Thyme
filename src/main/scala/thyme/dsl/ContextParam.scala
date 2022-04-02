@@ -45,27 +45,31 @@ object ContextParam {
 
   extension (self: Context => String) {
 
-    def as[T](implicit classTag: ClassTag[T]): Context => T = {
+    def as[T <: (String | Int | Long | Double | Float | Boolean)](implicit classTag: ClassTag[T]): Context => Option[T] = {
 
       (context: Context) => {
 
         val valueString: String = self(context)
 
-        (if (classTag == classTagString) {
-          valueString
-        } else if (classTag == classTagInt) {
-          java.lang.Integer.parseInt(valueString)
-        } else if (classTag == classTagLong) {
-          java.lang.Long.parseLong(valueString)
-        } else if (classTag == classTagFloat) {
-          java.lang.Float.parseFloat(valueString)
-        } else if (classTag == classTagDouble) {
-          java.lang.Double.parseDouble(valueString)
-        } else if (classTag == classTagBoolean) {
-          java.lang.Boolean.parseBoolean(valueString)
-        } else {
-          throw new IllegalArgumentException("Unknown Support Param Type")
-        }).asInstanceOf[T]
+        try {
+          Some((if (classTag == classTagString) {
+            valueString
+          } else if (classTag == classTagInt) {
+            java.lang.Integer.parseInt(valueString)
+          } else if (classTag == classTagLong) {
+            java.lang.Long.parseLong(valueString)
+          } else if (classTag == classTagFloat) {
+            java.lang.Float.parseFloat(valueString)
+          } else if (classTag == classTagDouble) {
+            java.lang.Double.parseDouble(valueString)
+          } else if (classTag == classTagBoolean) {
+            java.lang.Boolean.parseBoolean(valueString)
+          } else {
+            throw new IllegalArgumentException("Unknown Support Param Type")
+          }).asInstanceOf[T])
+        } catch {
+          case x: Exception => Option.empty
+        }
 
       }
     }
