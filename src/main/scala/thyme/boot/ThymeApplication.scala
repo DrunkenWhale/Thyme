@@ -57,7 +57,7 @@ private class ThymeApplication {
       } else {
 
         //--------------lambda user define-------------------
-        val complete: Complete = handlerOpt.get(Extractor.extractor(httpExchange,dynamicRouteParamList))
+        val complete: Complete = handlerOpt.get(Extractor.extractor(httpExchange, dynamicRouteParamList))
         //---------------------------------------------------
 
         setResponseHeader(httpExchange, ("Content-Type", complete.entity.contentType.toString))

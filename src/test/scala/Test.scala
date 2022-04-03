@@ -16,9 +16,8 @@ object Test {
           Complete(200, Entity(contentType = ContentTypes.`application/json`, responseBody = "{name:1}"))
         }
       } ~ path("/:name/:age/pigeon/:114514/:1919810/ls") {
-        post(route("name"),routes) {
-          (name,r) =>
-              println(r)
+        post(route("name"), routes) {
+          (name, r) =>
             Complete(200, Entity(contentType = ContentTypes.`application/json`, responseBody = s"{$name:114}"))
         }
       } ~ path("/apis") {
