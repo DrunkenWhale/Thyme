@@ -83,12 +83,14 @@ object ThymeApplication {
   }
 
   private def res(httpExchange: HttpExchange, statusCode: Int, responseBody: String): Unit = {
-
-    httpExchange.sendResponseHeaders(statusCode, responseBody.length)
-    httpExchange.getResponseBody.write(responseBody.getBytes(StandardCharsets.UTF_8))
+    // a string to a byte array
+    // its length may be changed
+    // for example: result contains chinese word
+    val bs = responseBody.getBytes(StandardCharsets.UTF_8)
+    httpExchange.sendResponseHeaders(statusCode, bs.length)
+    httpExchange.getResponseBody.write(bs)
     httpExchange.getResponseBody.flush()
     httpExchange.getResponseBody.close()
-
     RequestLogger.logRequest(httpExchange.getRequestMethod, httpExchange.getRequestURI.getPath, statusCode)
 
   }
