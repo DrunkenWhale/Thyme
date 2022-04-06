@@ -6,8 +6,12 @@ import thyme.dsl.ContextParam.*
 import thyme.dsl.rest.Post.post
 import thyme.dsl.Middleware.middleware
 import thyme.log.ThymeLogger
+import rosemary.stringify.Stringify.*
 
 object Test {
+
+  case class DTO(code: Int, message: String, data: Map[String, _] = Map.empty)
+
   def main(args: Array[String]): Unit = {
 
     val router =
@@ -24,7 +28,13 @@ object Test {
         middleware(context => context.header.contains("Pass")) {
           get(parameter("name").as[Double]) { name =>
             println(name.get)
-            Complete(200, Entity(contentType = ContentTypes.`application/json`, responseBody = s"{$name:114}"))
+            val res = DTO(200, "Succeed",
+              Map("name" -> Map(
+                "name" -> "野兽前辈",
+                "age" -> 114514,
+                "number" -> 1919810
+              ))).toJson
+            Complete(200, Entity(contentType = ContentTypes.`application/json`, responseBody = res))
           }
         }
       }
