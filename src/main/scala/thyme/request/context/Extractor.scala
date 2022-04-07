@@ -1,6 +1,8 @@
 package thyme.request.context
 
 import com.sun.net.httpserver.HttpExchange
+import rosemary.parser.model.JsonObject
+import rosemary.parser.Parser.parse
 import thyme.request.context.Context
 
 class Extractor {
@@ -14,28 +16,6 @@ object Extractor {
         val headers = httpExchange.getRequestHeaders
         headers.keySet().toArray().map(key => (key.asInstanceOf[String], headers.get(key).toArray().mkString(" "))).toMap
       }
-
-      val form: Map[String, String] = {
-
-        val tempArray: Array[Byte] = httpExchange.getRequestBody.readAllBytes()
-        if (tempArray.isEmpty) {
-          Map.empty
-        } else {
-          val rawFormString: String = String(httpExchange.getRequestBody.readAllBytes())
-          if (rawFormString.length >= 3) {
-            rawFormString.trim
-                .split("&")
-                .map(str => {
-                  val tuple = str.split("=")
-                  (tuple(0), tuple(1))
-                })
-                .toMap
-          } else {
-            Map.empty
-          }
-        }
-      }
-
 
       val parameter: Map[String, String] = {
 
@@ -61,9 +41,53 @@ object Extractor {
           Map.empty
         }
 
-
       }
 
+      val contentTypeOpt = {
+        val tmpOpt: Option[(String, String)] = header.find((k, v) => k.equalsIgnoreCase("content-type"))
+        if (tmpOpt.nonEmpty) {
+          Some(tmpOpt.get._2)
+        } else {
+          Option.empty
+        }
+      }
+
+      val form: Map[String, String] = {
+        if (contentTypeOpt.isEmpty || contentTypeOpt.get.contains("form")) {
+          val tempArray: Array[Byte] = httpExchange.getRequestBody.readAllBytes()
+          if (tempArray.isEmpty) {
+            Map.empty
+          } else {
+            val rawFormString: String = String(httpExchange.getRequestBody.readAllBytes())
+            if (rawFormString.length >= 3) {
+              rawFormString.trim
+                  .split("&")
+                  .map(str => {
+                    val tuple = str.split("=")
+                    (tuple(0), tuple(1))
+                  })
+                  .toMap
+            } else {
+              Map.empty
+            }
+          }
+        } else {
+          Map.empty
+        }
+      }
+
+      val json = {
+        if (contentTypeOpt.nonEmpty && contentTypeOpt.get.contains("application/json")) {
+          val byteArray = httpExchange.getRequestBody.readAllBytes()
+          if (byteArray.nonEmpty) {
+            parse(String(byteArray))
+          } else {
+            JsonObject()
+          }
+        } else {
+          JsonObject()
+        }
+      }
 
       Context(
         path = httpExchange.getRequestURI.getPath,
@@ -71,6 +95,7 @@ object Extractor {
         header = header,
         form = form,
         parameter = parameter,
+        json = json,
         route = dynamicRouteParam.toMap
       )
     } catch {

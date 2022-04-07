@@ -1,5 +1,6 @@
 package thyme.dsl
 
+import rosemary.parser.model.JsonValue
 import thyme.request.context.Context
 
 import scala.reflect.{ClassTag, classTag}
@@ -27,6 +28,10 @@ object ContextParam {
       context.route.getOrElse(name, "")
   }
 
+  def json: Context => JsonValue = {
+    (context: Context) => context.json
+  }
+
   def parameters: Context => Map[String, String] = {
     (context: Context) => context.parameter
   }
@@ -42,6 +47,7 @@ object ContextParam {
   def routes: Context => Map[String, String] = {
     (context: Context) => context.route
   }
+
 
   extension (self: Context => String) {
 

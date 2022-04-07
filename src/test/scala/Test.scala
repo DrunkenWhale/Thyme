@@ -16,8 +16,9 @@ object Test {
 
     val router =
       path("/api") {
-        get { () =>
-          Complete(200, Entity(contentType = ContentTypes.`application/json`, responseBody = "{name:1}"))
+        get(headers, json) { (header, json) =>
+          println(json)
+          Complete(200, Entity(contentType = ContentTypes.`text/plain`, responseBody = header.toString))
         }
       } ~ path("/:name/:age/pigeon/:114514/:1919810/ls") {
         post(route("name"), routes) {
