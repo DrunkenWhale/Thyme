@@ -3,6 +3,7 @@ package thyme.request.context
 import com.sun.net.httpserver.HttpExchange
 import rosemary.parser.model.JsonObject
 import rosemary.parser.Parser.parse
+import thyme.boot.ThymeApplication
 import thyme.request.context.Context
 
 class Extractor {
@@ -100,6 +101,7 @@ object Extractor {
       )
     } catch {
       case x: Exception => x.printStackTrace()
+        ThymeApplication.res(httpExchange, 500, "Internal Error")
         null
     }
 

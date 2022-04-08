@@ -82,7 +82,7 @@ object ThymeApplication {
 
   }
 
-  private def res(httpExchange: HttpExchange, statusCode: Int, responseBody: String): Unit = {
+  private[thyme] def res(httpExchange: HttpExchange, statusCode: Int, responseBody: String): Unit = {
     // a string to a byte array
     // its length may be changed
     // for example: result contains chinese word
