@@ -5,7 +5,7 @@ import thyme.boot.ThymeApplication.{res, setResponseHeader}
 import thyme.log.{BootLogger, RequestLogger}
 import thyme.request.Node
 import thyme.request.context.Extractor
-import thyme.response.{Complete, ContentTypes}
+import thyme.response.{Complete, ContentTypes, Entity}
 import thyme.route.RouteTree
 
 import concurrent.ExecutionContext.Implicits.global
@@ -57,7 +57,13 @@ private class ThymeApplication {
       } else {
 
         //--------------lambda user define-------------------
-        val complete: Complete = handlerOpt.get(Extractor.extractor(httpExchange, dynamicRouteParamList))
+        val complete: Complete =
+          try {
+            handlerOpt.get(Extractor.extractor(httpExchange, dynamicRouteParamList))
+          } catch {
+            case e: Exception => e.printStackTrace()
+              Complete(500, Entity(ContentTypes.`text/plain`, "Internal Error"))
+          }
         //---------------------------------------------------
 
         setResponseHeader(httpExchange, ("Content-Type", complete.entity.contentType.toString))

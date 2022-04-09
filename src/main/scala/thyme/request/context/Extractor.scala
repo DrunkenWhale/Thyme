@@ -101,7 +101,8 @@ object Extractor {
       )
     } catch {
       case x: Exception => x.printStackTrace()
-        ThymeApplication.res(httpExchange, 500, "Internal Error")
+        // http header illegal
+        ThymeApplication.res(httpExchange, 400, "Bad Request")
         null
     }
 
