@@ -56,15 +56,27 @@ private class ThymeApplication {
         }
       } else {
 
-        //--------------lambda user define-------------------
         val complete: Complete =
           try {
-            handlerOpt.get(Extractor.extractor(httpExchange, dynamicRouteParamList))
+            val contextOpt = Extractor.extractor(httpExchange, dynamicRouteParamList)
+            if (contextOpt.isDefined) {
+
+              //--------------lambda user define-------------------
+
+              handlerOpt.get(contextOpt.get)
+
+              //---------------------------------------------------
+
+            } else {
+
+              Complete(400, Entity(ContentTypes.`text/plain`, "Bad Request"))
+
+            }
           } catch {
-            case e: Exception => e.printStackTrace()
+            e =>
+              e.printStackTrace()
               Complete(500, Entity(ContentTypes.`text/plain`, "Internal Error"))
           }
-        //---------------------------------------------------
 
         setResponseHeader(httpExchange, ("Content-Type", complete.entity.contentType.toString))
         res(httpExchange, complete.statusCode, complete.entity.responseBody)
@@ -88,7 +100,7 @@ object ThymeApplication {
 
   }
 
-  private[thyme] def res(httpExchange: HttpExchange, statusCode: Int, responseBody: String): Unit = {
+  private def res(httpExchange: HttpExchange, statusCode: Int, responseBody: String): Unit = {
     // a string to a byte array
     // its length may be changed
     // for example: result contains chinese word

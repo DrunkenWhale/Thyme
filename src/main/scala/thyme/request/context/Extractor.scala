@@ -6,12 +6,9 @@ import rosemary.parser.Parser.parse
 import thyme.boot.ThymeApplication
 import thyme.request.context.Context
 
-class Extractor {
-
-}
 
 object Extractor {
-  def extractor(httpExchange: HttpExchange, dynamicRouteParam: List[(String, String)] = List()): Context = {
+  def extractor(httpExchange: HttpExchange, dynamicRouteParam: List[(String, String)] = List()): Option[Context] = {
     try {
       val header: Map[String, String] = {
         val headers = httpExchange.getRequestHeaders
@@ -90,20 +87,22 @@ object Extractor {
         }
       }
 
-      Context(
-        path = httpExchange.getRequestURI.getPath,
-        method = httpExchange.getRequestMethod,
-        header = header,
-        form = form,
-        parameter = parameter,
-        json = json,
-        route = dynamicRouteParam.toMap
+      Option(
+        Context(
+          path = httpExchange.getRequestURI.getPath,
+          method = httpExchange.getRequestMethod,
+          header = header,
+          form = form,
+          parameter = parameter,
+          json = json,
+          route = dynamicRouteParam.toMap
+        )
       )
     } catch {
       case x: Exception => x.printStackTrace()
         // http header illegal
-        ThymeApplication.res(httpExchange, 400, "Bad Request")
-        null
+        Option.empty
+
     }
 
   }
