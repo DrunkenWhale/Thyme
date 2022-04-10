@@ -22,6 +22,11 @@ object ContextParam {
       context.header.getOrElse(name, "")
   }
 
+  def attribute(name: String): Context => String = {
+    (context: Context) =>
+      context.attribute.getOrElse(name, "")
+  }
+
   // dynamic route param
   def route(name: String): Context => String = {
     (context: Context) =>
@@ -42,6 +47,10 @@ object ContextParam {
 
   def headers: Context => Map[String, String] = {
     (context: Context) => context.header
+  }
+
+  def attributes: Context => Map[String, String] = {
+    (context: Context) => context.attribute
   }
 
   def routes: Context => Map[String, String] = {
