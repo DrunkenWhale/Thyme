@@ -4,7 +4,7 @@ import thyme.response.{Complete, ContentTypes, Entity}
 import thyme.dsl.Path.*
 import thyme.dsl.ContextParam.*
 import thyme.dsl.rest.Post.post
-import thyme.dsl.Middleware.middleware
+import thyme.dsl.Middleware.interceptor
 import thyme.log.ThymeLogger
 import rosemary.stringify.Stringify.*
 
@@ -26,7 +26,7 @@ object Test {
             Complete(200, Entity(contentType = ContentTypes.`application/json`, responseBody = s"{$name:114}"))
         }
       } ~ path("/apis") {
-        middleware(context => context.header.contains("Pass")) {
+        interceptor(context => context.header.contains("Pass")) {
           get(parameter("name").as[Double]) { name =>
             println(name.get)
             val res = DTO(200, "Succeed",
