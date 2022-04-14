@@ -74,7 +74,7 @@ import thyme.response.{Complete, ContentTypes, Entity}
 import thyme.dsl.Path.*
 import thyme.dsl.ContextParam.*
 import thyme.dsl.rest.Post.post
-import thyme.dsl.Middleware.interceptor
+import thyme.dsl.Interceptor.interceptor
 import thyme.log.ThymeLogger
 import rosemary.stringify.Stringify.*
 

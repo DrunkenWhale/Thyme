@@ -6,7 +6,7 @@ import thyme.response.ContentTypes
 import thyme.request.context.{Context, Extractor}
 import thyme.response.{Complete, Entity}
 
-object Middleware {
+object Interceptor {
 
   def interceptor(interceptors: (Context => Boolean)*)(route: Node*): Seq[Node] = {
     route.map { r =>

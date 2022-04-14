@@ -4,7 +4,7 @@ object DSL {
 
   export thyme.dsl.Path.path
   export thyme.dsl.Path.~
-  export thyme.dsl.Middleware.interceptor
+  export thyme.dsl.Interceptor.interceptor
   export thyme.dsl.ContextParam.parameter
   export thyme.dsl.ContextParam.parameters
   export thyme.dsl.ContextParam.as
