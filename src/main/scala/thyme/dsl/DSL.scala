@@ -26,8 +26,6 @@ object DSL {
   export rosemary.parser.Parser.parse
   export rosemary.stringify.Stringify.stringify
   export rosemary.stringify.Stringify.toJson
-  export rosemary.stringify.Generate.arr
-  export rosemary.stringify.Generate.json
   export rosemary.stringify.Generate.obj
   export rosemary.stringify.conv.ValueToJsonType.given
 
